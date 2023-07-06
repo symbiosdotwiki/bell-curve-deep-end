@@ -6,9 +6,11 @@ import { useGLTF } from '@react-three/drei'
 import { useStore } from './state'
 import { mapping } from './mapping'
 
+const gltfURL = process.env.PUBLIC_URL + '/balloons.glb'
+
 export default function Scene(props) {
   const ref = useRef()
-  const gltf = useGLTF('/balloons.glb')
+  const gltf = useGLTF(gltfURL)
   const { nodes, materials } = gltf
 
   const curTrack = useStore((state) => state.curTrack)
@@ -39,4 +41,4 @@ export default function Scene(props) {
   )
 }
 
-useGLTF.preload('/balloons.glb')
+useGLTF.preload(gltfURL)
