@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/bell-curve-deep-end/static/css/main.e898cd73.css",
-    "main.js": "/bell-curve-deep-end/static/js/main.dfc5ae20.js",
+    "main.js": "/bell-curve-deep-end/static/js/main.8dd68eb3.js",
     "static/js/787.14a694f1.chunk.js": "/bell-curve-deep-end/static/js/787.14a694f1.chunk.js",
     "static/media/logo.svg": "/bell-curve-deep-end/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/bell-curve-deep-end/index.html",
     "main.e898cd73.css.map": "/bell-curve-deep-end/static/css/main.e898cd73.css.map",
-    "main.dfc5ae20.js.map": "/bell-curve-deep-end/static/js/main.dfc5ae20.js.map",
+    "main.8dd68eb3.js.map": "/bell-curve-deep-end/static/js/main.8dd68eb3.js.map",
     "787.14a694f1.chunk.js.map": "/bell-curve-deep-end/static/js/787.14a694f1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e898cd73.css",
-    "static/js/main.dfc5ae20.js"
+    "static/js/main.8dd68eb3.js"
   ]
 }
