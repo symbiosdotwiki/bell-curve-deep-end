@@ -47,7 +47,14 @@ function App() {
       />
       <Suspense fallback={<Loading/>}>
         <div className="THREE">
-          <Canvas shadows={false}>
+          <Canvas 
+            shadows 
+            onPointerMissed={(e)=>{
+              useStore.setState({ 
+                cam: null,
+              })
+            }}
+          >
             <Scene
               // resetCam={() => resetCam()}
               // portrait={dimensions.portrait}

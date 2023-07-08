@@ -31,7 +31,11 @@ const Cam = (props) => {
 
 function Balloon(props){
   const { geo, cam } = props
-  let camRef = useRef()
+  const camRef = useRef()
+  const geoRef = useRef()
+
+  let q = new THREE.Quaternion()
+  let p = new THREE.Vector3()
 
   const clickGeo = (e) => {
     if(e) e.stopPropagation()
@@ -39,24 +43,31 @@ function Balloon(props){
       curTrack: mapping[geo.name],
       cam: camRef.current ,
     })
-  console.log(camRef.current)
   }
 
-  // console.log('hi')
+  geo.updateWorldMatrix(true, true)
+  geo.getWorldPosition(p.set(0,0,0))
+  geo.getWorldQuaternion(q)
+
+  useFrame((state, dt) => {
+
+  })
 
   return (
     <group>
       <Cam camRef={camRef} cam={cam} />
-      <primitive 
-        object={geo} 
+      <mesh 
+        castShadow receiveShadow
+        geometry={geo.geometry} 
+        material={geo.material}
+        position={p}
+        quaternion={q}
+        ref={geoRef}
         onClick={() => {
           useStore.setState({
             'curTrack':mapping[geo.name],
             'cam': camRef.current,
           })
-          // console.log(camRef.current.position)
-          
-          // console.log(geo)
         }}
       />
       </group>
@@ -68,12 +79,8 @@ export default function Balloons(props) {
   const gltf = useGLTF(gltfURL)
   const { nodes, materials } = gltf
 
-  // console.log(gltf)
-
-
   Object.keys(nodes).map((key,idx) => {
     const geo = nodes[key]
-    // console.log(key, geo)
   })
 
   const meshes = Object.keys(nodes).filter(key => 
@@ -82,7 +89,6 @@ export default function Balloons(props) {
   const cams = Object.keys(nodes).filter(key => 
     !meshes.includes(key) && !key.includes('Root')
   )
-  // console.log(cams, meshes)
 
   // useFrame(() => (ref.current.rotation.y += 0.002))
 
@@ -93,7 +99,6 @@ export default function Balloons(props) {
       const mat = materials[key]
       const cam = nodes[key + '_Cam']
       if(!cam) return 
-      // console.log(cam)
       return <Balloon 
           key={idx}
           geo={geo} 

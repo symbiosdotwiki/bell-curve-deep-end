@@ -11,6 +11,12 @@ import { findValuesByKey } from './helpers'
 
 const gltfURL = process.env.PUBLIC_URL + '/scene.glb'
 
+const defCam = new THREE.PerspectiveCamera()
+defCam.position.y = 2
+defCam.position.x = -1
+defCam.position.z = 0
+defCam.lookAt(0, .5, 0)
+
 export default function Scene(props) {
   const ref = useRef()
   const gltf = useGLTF(gltfURL)
@@ -23,33 +29,29 @@ export default function Scene(props) {
   let pDef = new THREE.Vector3(camera.position)
 
   const cam = useStore((state) => state.cam)
-  // console.log('CAM', cam)
-  // const q = useStore((state) => state.q)
+
+  gltf.scene.children.forEach((mesh, i) => {
+        mesh.castShadow = true;
+    })
+  gltf.castShadow = true;
+  gltf.scene.castShadow = true;
+  const meshes = Object.keys(nodes).filter(key => 
+    !key.includes('_Cam') && !key.includes('_CAM') && !key.includes('Root')
+  )
 
   const resetView = () => {
-    // let dist = portrait ? 230 : 180
-    q.copy(qDef)
-    p.copy(pDef)
-    // useStore.setState({
-    //   q: new THREE.Quaternion(camera.quaternion),
-    //   p: new THREE.Quaternion(camera.quaternion)
-    // })
+    q.copy(defCam.quaternion)
+    p.copy(defCam.position)
   }
 
-  if(cam == null) {}//resetView()
+  if(cam == null) resetView()
   else {
     cam.updateWorldMatrix(true, true)
     cam.getWorldPosition(p.set(0,0,0))
     cam.getWorldQuaternion(q)
-    console.log('here', p)
   }
 
-
-
-  // console.log(gltf)
-
   let mats = findValuesByKey(gltf.scene.children, 'material', ['parent'])
-  // console.log(mats)
 
   materials.principledshader.side = THREE.DoubleSide
   mats.forEach(mat => {
@@ -75,14 +77,9 @@ export default function Scene(props) {
   })
   
   useEffect(() => {
-    camera.position.y = 2
-    camera.position.x = -1
-    camera.position.z = 0
-    camera.lookAt(0, .5, 0)
-    qDef = camera.quaternion
-    pDef = camera.position
+    camera.position.copy(defCam.position)
+    camera.quaternion.copy(defCam.quaternion)
     resetView()
-    // qDefault = camera.quaternion
   }, [])
 
   const hdriUrl = process.env.PUBLIC_URL + "/00024.png"
@@ -90,13 +87,22 @@ export default function Scene(props) {
 
   return (
     <group ref={ref} {...props} dispose={null}>
-    <primitive 
-      object={gltf.scene}
-    />
-    <Environment map={hdri} background />
+    {meshes.map((key,idx) => {
+      const geo = nodes[key]
+      const mat = materials[key]
+      const cam = nodes[key + '_Cam']
+      // console.log('mat', geo.geometry)
+      return <mesh 
+        castShadow receiveShadow
+        key={idx}
+        geometry={geo.geometry}
+        material={geo.material}
+      />
+    })}
+    <Environment map={hdri} background onClick={()=>{console.log('click')}}/>
     <directionalLight
           // ref={light}
-          // castShadow
+          castShadow
           color="white"
           intensity={.9}
           position={[-150, 150, 150]}
