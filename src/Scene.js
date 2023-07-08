@@ -17,8 +17,12 @@ defCam.position.x = -1
 defCam.position.z = 0
 defCam.lookAt(0, .5, 0)
 
+
+
 export default function Scene(props) {
   const ref = useRef()
+  const lightRef = useRef()
+
   const gltf = useGLTF(gltfURL)
   const { nodes, materials } = gltf
 
@@ -29,6 +33,7 @@ export default function Scene(props) {
   let pDef = new THREE.Vector3(camera.position)
 
   const cam = useStore((state) => state.cam)
+  const curTrack = useStore((state) => state.curTrack)
 
   gltf.scene.children.forEach((mesh, i) => {
         mesh.castShadow = true;
@@ -53,16 +58,18 @@ export default function Scene(props) {
 
   let mats = findValuesByKey(gltf.scene.children, 'material', ['parent'])
 
-  materials.principledshader.side = THREE.DoubleSide
-  mats.forEach(mat => {
-    mat.side = THREE.DoubleSide
-  })
-
-  const curTrack = useStore((state) => state.curTrack)
+  // materials.principledshader.side = THREE.DoubleSide
+  // mats.forEach(mat => {
+  //   mat.side = THREE.DoubleSide
+  // })
 
   useFrame((state, dt) => {
     const lerpAmt = .05
 
+    const time = state.clock.getElapsedTime()
+    lightRef.current.rotation.y = time/10
+    // lightRef.current.position.z = Math.cos(time/10)
+    // lightRef.current.updateWorldMatrix(true, true)
     // camera.zoom = portrait ? .2 : .25
 
     // ref.current.rotation.y += 0.002
@@ -87,32 +94,40 @@ export default function Scene(props) {
 
   return (
     <group ref={ref} {...props} dispose={null}>
-    {meshes.map((key,idx) => {
-      const geo = nodes[key]
-      const mat = materials[key]
-      const cam = nodes[key + '_Cam']
-      // console.log('mat', geo.geometry)
-      return <mesh 
-        castShadow receiveShadow
-        key={idx}
-        geometry={geo.geometry}
-        material={geo.material}
-      />
-    })}
-    <Environment map={hdri} background onClick={()=>{console.log('click')}}/>
-    <directionalLight
-          // ref={light}
+      {meshes.map((key,idx) => {
+        const geo = nodes[key]
+        const mat = materials[key]
+        const cam = nodes[key + '_Cam']
+        // const matt = new THREE.MeshLambertMaterial()
+        if(geo.name.includes('OUT'))
+          geo.material.side = THREE.DoubleSide
+        // matt.map = geo.material.map
+        // console.log('mat', geo.name)
+        return <mesh 
+          castShadow receiveShadow
+          key={idx}
+          geometry={geo.geometry}
+          // material={matt}
+          material={geo.material}
+        />
+      })}
+      <Environment map={hdri} background onClick={()=>{console.log('click')}}/>
+      <ambientLight intensity={.5} />
+      <group ref={lightRef}>
+        <directionalLight
+          // ref={lightRef}
           castShadow
           color="white"
-          intensity={.9}
-          position={[-150, 150, 150]}
-          angle={0.15}
-          penumbra={1}
-          shadow-mapSize={[512, 512]}
+          intensity={1.9}
+          position={[-2, 2, 2]}
+          shadow-mapSize={2048}
+          target-position={[0, 1, 0]}
           shadow-bias={-0.001}
-          target-position={[0, 0, 0]}
           // onUpdate={(self) => self.target.updateMatrixWorld()}
-        />
+        >
+          <orthographicCamera attach="shadow-camera" args={[-3, 3, 3, -3, .1, 10]} />
+        </directionalLight>
+      </group>
     </group>
   )
 }
@@ -121,16 +136,5 @@ Scene.defaultProps = {
   p : new THREE.Vector3(-2,2,0),
   q : new THREE.Quaternion(),
 }
-
-// const pStart = new THREE.Vector3()
-// pStart.copy(Scene.defaultProps.p)
-// pStart.sub(new THREE.Vector3( 0, 0, 0 ))
-// pStart.normalize()
-// pStart.multiplyScalar(-1)
-
-// const qStart = new THREE.Quaternion()
-// qStart.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), -Math.PI / 2 );
-// Scene.defaultProps.q.setFromUnitVectors(new THREE.Vector3( .5, 5, 0 ), pStart.normalize());
-// Scene.defaultProps.q.multiply(qStart)
 
 useGLTF.preload(gltfURL)

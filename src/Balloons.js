@@ -37,6 +37,8 @@ function Balloon(props){
   let q = new THREE.Quaternion()
   let p = new THREE.Vector3()
 
+  const rand = Math.random()
+
   const clickGeo = (e) => {
     if(e) e.stopPropagation()
     useStore.setState({ 
@@ -50,8 +52,12 @@ function Balloon(props){
   geo.getWorldQuaternion(q)
 
   useFrame((state, dt) => {
-
+    const time = state.clock.getElapsedTime()
+    const wiggle = Math.exp((Math.cos(time/2 + 99*rand) + 1)/2) / Math.exp(0)
+    geoRef.current.position.y =  p.y+ .01 * wiggle
   })
+
+  geo.material.roughness = .1
 
   return (
     <group>
@@ -65,8 +71,9 @@ function Balloon(props){
         ref={geoRef}
         onClick={() => {
           useStore.setState({
-            'curTrack':mapping[geo.name],
-            'cam': camRef.current,
+            curTrack: mapping[geo.name],
+            cam: camRef.current,
+            curTarget: geoRef.current,
           })
         }}
       />

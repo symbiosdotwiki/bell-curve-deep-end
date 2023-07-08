@@ -6,6 +6,7 @@ export const defaultState = {
   // p:  new THREE.Vector3(0,2,0),
   // q: new THREE.Quaternion(),
   cam: null,
+  curTarget: null,
   // activeCam: null,
   // activeObj: null,
   // activeTile: null,
