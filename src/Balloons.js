@@ -10,7 +10,7 @@ import {
 
 
 import { useStore } from './state'
-import { mapping } from './mapping'
+import { mapping, tracklist } from './mapping'
 
 const gltfURL = process.env.PUBLIC_URL + '/balloons.glb'
 
@@ -52,10 +52,13 @@ function Balloon(props){
   const rand = Math.random()
 
   const clickGeo = (e) => {
+    const trackNum = tracklist.indexOf(mapping[geo.name])
+    // console.log(trackNum)
     if(e) e.stopPropagation()
     useStore.setState({ 
-      curTrack: mapping[geo.name],
+      curTrack: trackNum,
       cam: camRef.current,
+      curTarget: geoRef.current
     })
   }
 
@@ -72,7 +75,7 @@ function Balloon(props){
     }
   })
 
-  geo.material.roughness = .1
+  geo.material.roughness = .03
 
   return (
     <group>
@@ -85,13 +88,7 @@ function Balloon(props){
           position={p}
           quaternion={q}
           ref={geoRef}
-          onClick={() => {
-            useStore.setState({
-              curTrack: mapping[geo.name],
-              cam: camRef.current,
-              curTarget: geoRef.current,
-            })
-          }}
+          onClick={clickGeo}
         />
         </Select>
       </group>

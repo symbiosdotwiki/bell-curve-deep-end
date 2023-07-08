@@ -12,7 +12,7 @@ import { BlendFunction } from 'postprocessing'
 // import { Environment, useTexture } from '@react-three/drei'
 import ReactPlayer from 'react-player/soundcloud'
 
-import { useStore } from './state'
+import { useStore, scURL } from './state'
 import Scene from './Scene'
 import Balloons from './Balloons'
 
@@ -33,12 +33,15 @@ function App() {
   const curTarget = useStore((state) => state.curTarget)
 
   
-  let dofTarget = new THREE.Vector3()
+  let dofTarget = new THREE.Vector3(0,1.5,0)
   if(curTarget)
     dofTarget = curTarget.position
 
-  if(curTrack && scRef.current)
+  if(curTrack != null && scRef.current){
+    // console.log('hi', curTrack)
+    // console.log(scRef.current, scRef.current.getInternalPlayer())
     scRef.current.getInternalPlayer().skip(curTrack)
+  }
 
   useEffect(() => {
     const handleKeyUp = (e) => {
@@ -57,7 +60,7 @@ function App() {
       <header> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> </header>
       <ReactPlayer 
         className='sc-player'
-        url='https://soundcloud.com/isaka_symbios_wiki/sets/traxxx' 
+        url={scURL} 
         width={'100%'}
         height={'10%'}
         ref={scRef}
@@ -65,7 +68,7 @@ function App() {
           playing:true,
           soundcloud:{
             options:{
-              start_track:curTrack
+              start_track:curTrack,
             }
           }
         }}

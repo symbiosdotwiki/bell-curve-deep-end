@@ -12,10 +12,10 @@ import { findValuesByKey } from './helpers'
 const gltfURL = process.env.PUBLIC_URL + '/scene.glb'
 
 const defCam = new THREE.PerspectiveCamera()
-defCam.position.y = 2
-defCam.position.x = -1
+defCam.position.y = 1.5
+defCam.position.x = -1.5
 defCam.position.z = 0
-defCam.lookAt(0, .5, 0)
+defCam.lookAt(0, .8, 0)
 
 
 
@@ -58,26 +58,12 @@ export default function Scene(props) {
 
   let mats = findValuesByKey(gltf.scene.children, 'material', ['parent'])
 
-  // materials.principledshader.side = THREE.DoubleSide
-  // mats.forEach(mat => {
-  //   mat.side = THREE.DoubleSide
-  // })
-
   useFrame((state, dt) => {
     const lerpAmt = .05
 
     const time = state.clock.getElapsedTime()
-    lightRef.current.rotation.y = time/10
-    // lightRef.current.position.z = Math.cos(time/10)
-    // lightRef.current.updateWorldMatrix(true, true)
-    // camera.zoom = portrait ? .2 : .25
+    lightRef.current.rotation.y = time/40
 
-    // ref.current.rotation.y += 0.002
-    // if(!q || !p){
-    //   p = pDef
-    //   q = qDef
-    // }
-    // console.log(p)
     camera.quaternion.slerp(q, lerpAmt)
     camera.position.lerp(p, lerpAmt)
     state.camera.updateProjectionMatrix()
@@ -98,11 +84,10 @@ export default function Scene(props) {
         const geo = nodes[key]
         const mat = materials[key]
         const cam = nodes[key + '_Cam']
-        // const matt = new THREE.MeshLambertMaterial()
+
         if(geo.name.includes('OUT'))
           geo.material.side = THREE.DoubleSide
-        // matt.map = geo.material.map
-        // console.log('mat', geo.name)
+
         return <mesh 
           castShadow receiveShadow
           key={idx}
@@ -115,7 +100,6 @@ export default function Scene(props) {
       <ambientLight intensity={.5} />
       <group ref={lightRef}>
         <directionalLight
-          // ref={lightRef}
           castShadow
           color="white"
           intensity={1.9}
@@ -123,7 +107,6 @@ export default function Scene(props) {
           shadow-mapSize={2048}
           target-position={[0, 1, 0]}
           shadow-bias={-0.001}
-          // onUpdate={(self) => self.target.updateMatrixWorld()}
         >
           <orthographicCamera attach="shadow-camera" args={[-3, 3, 3, -3, .1, 10]} />
         </directionalLight>
