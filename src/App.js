@@ -1,10 +1,11 @@
 import { Suspense, useRef } from "react"
 import { Canvas, useLoader } from '@react-three/fiber'
-import { Environment } from '@react-three/drei'
+// import { Environment, useTexture } from '@react-three/drei'
 import ReactPlayer from 'react-player/soundcloud'
 
 import { useStore } from './state'
 import Scene from './Scene'
+import Balloons from './Balloons'
 
 import logo from './logo.svg'
 import './App.css'
@@ -20,6 +21,8 @@ function Loading() {
 function App() {
   const scRef = useRef()
   const curTrack = useStore((state) => state.curTrack)
+
+  
 
   if(curTrack && scRef.current)
     scRef.current.getInternalPlayer().skip(curTrack)
@@ -49,7 +52,11 @@ function App() {
               // resetCam={() => resetCam()}
               // portrait={dimensions.portrait}
             />
-            <Environment preset="sunset" background />
+            <Balloons
+              // resetCam={() => resetCam()}
+              // portrait={dimensions.portrait}
+            />
+            
           </Canvas>
         </div>
       </Suspense>

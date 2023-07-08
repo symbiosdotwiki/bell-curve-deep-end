@@ -1,7 +1,11 @@
 import create from 'zustand'
+import * as THREE from "three"
 
 export const defaultState = {
   curTrack: 0,
+  // p:  new THREE.Vector3(0,2,0),
+  // q: new THREE.Quaternion(),
+  cam: null,
   // activeCam: null,
   // activeObj: null,
   // activeTile: null,
@@ -9,6 +13,8 @@ export const defaultState = {
   // camResetDone: false,
   // clickObj: null,
 }
+
+// defaultState.q.setFromAxisAngle( new THREE.Vector3( 0, 1, 1 ), -Math.PI / 2 );
 
 export const useStore = create((set) => ({
   ...defaultState,
