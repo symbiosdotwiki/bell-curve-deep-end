@@ -1,8 +1,13 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 
 import * as THREE from "three"
 import { useFrame, useThree } from "@react-three/fiber"
 import { useGLTF, PerspectiveCamera } from '@react-three/drei'
+
+import { 
+  Select
+} from '@react-three/postprocessing'
+
 
 import { useStore } from './state'
 import { mapping } from './mapping'
@@ -34,6 +39,13 @@ function Balloon(props){
   const camRef = useRef()
   const geoRef = useRef()
 
+  // const [selected, setSelected] = useState(false);
+
+  const curTarget = useStore((state) => state.curTarget)
+
+  const selected = curTarget && curTarget == geoRef.current
+  // console.log(selected)
+
   let q = new THREE.Quaternion()
   let p = new THREE.Vector3()
 
@@ -43,7 +55,7 @@ function Balloon(props){
     if(e) e.stopPropagation()
     useStore.setState({ 
       curTrack: mapping[geo.name],
-      cam: camRef.current ,
+      cam: camRef.current,
     })
   }
 
@@ -55,6 +67,9 @@ function Balloon(props){
     const time = state.clock.getElapsedTime()
     const wiggle = Math.exp((Math.cos(time/2 + 99*rand) + 1)/2) / Math.exp(0)
     geoRef.current.position.y =  p.y+ .01 * wiggle
+    if(selected){
+      geoRef.current.rotation.y += .003
+    }
   })
 
   geo.material.roughness = .1
@@ -62,21 +77,23 @@ function Balloon(props){
   return (
     <group>
       <Cam camRef={camRef} cam={cam} />
-      <mesh 
-        castShadow receiveShadow
-        geometry={geo.geometry} 
-        material={geo.material}
-        position={p}
-        quaternion={q}
-        ref={geoRef}
-        onClick={() => {
-          useStore.setState({
-            curTrack: mapping[geo.name],
-            cam: camRef.current,
-            curTarget: geoRef.current,
-          })
-        }}
-      />
+      <Select name={geo.name} enabled={selected}>
+        <mesh 
+          castShadow receiveShadow
+          geometry={geo.geometry} 
+          material={geo.material}
+          position={p}
+          quaternion={q}
+          ref={geoRef}
+          onClick={() => {
+            useStore.setState({
+              curTrack: mapping[geo.name],
+              cam: camRef.current,
+              curTarget: geoRef.current,
+            })
+          }}
+        />
+        </Select>
       </group>
     )
 }

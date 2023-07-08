@@ -2,8 +2,12 @@ import { Suspense, useRef, useEffect } from "react"
 
 import * as THREE from "three"
 import { Canvas, useLoader } from '@react-three/fiber'
-import { SoftShadows } from "@react-three/drei"
-import { EffectComposer, DepthOfField, Bloom } from '@react-three/postprocessing'
+import { SoftShadows, Stats } from "@react-three/drei"
+import { 
+  EffectComposer, DepthOfField, Bloom, Selection, Outline
+} from '@react-three/postprocessing'
+import { BlendFunction } from 'postprocessing'
+
 
 // import { Environment, useTexture } from '@react-three/drei'
 import ReactPlayer from 'react-player/soundcloud'
@@ -76,19 +80,40 @@ function App() {
               })
             }}
           >
+          <Selection>
             <Scene
               // resetCam={() => resetCam()}
               // portrait={dimensions.portrait}
             />
-            <Balloons
-              // resetCam={() => resetCam()}
-              // portrait={dimensions.portrait}
-            />
-            <SoftShadows size={10} samples={10} />
-            <EffectComposer multisampling={0}>
-              <DepthOfField target={dofTarget} focalLength={0.002} bokehScale={8} height={1024} />
+
+            <SoftShadows size={10} samples={5} />
+
+            <EffectComposer multisampling={0} autoClear={false}>
+              <DepthOfField 
+                target={dofTarget} 
+                focalLength={0.002} 
+                bokehScale={8} 
+                height={512} 
+              />
               <Bloom luminanceThreshold={.5} mipmapBlur luminanceSmoothing={0.0} intensity={.5} />
+              <Outline 
+                visibleEdgeColor="yellow" 
+                hiddenEdgeColor="black" 
+                blur 
+                width={512} 
+                edgeStrength={4} 
+                blendFunction={BlendFunction.ALPHA}
+                pulseSpeed={.2}
+              />
             </EffectComposer>
+
+              <Balloons
+                // resetCam={() => resetCam()}
+                // portrait={dimensions.portrait}
+              />
+            </Selection>
+
+            <Stats />
           </Canvas>
         </div>
       </Suspense>
