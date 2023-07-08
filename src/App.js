@@ -4,7 +4,7 @@ import * as THREE from "three"
 import { Canvas, useLoader } from '@react-three/fiber'
 import { SoftShadows, Stats } from "@react-three/drei"
 import { 
-  EffectComposer, DepthOfField, Bloom, Selection, Outline
+  EffectComposer, DepthOfField, Bloom, Selection, Outline, SSAO
 } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 
@@ -108,6 +108,12 @@ function App() {
                 blendFunction={BlendFunction.ALPHA}
                 pulseSpeed={.2}
               />
+              {/*<SSAO
+                blendFunction={BlendFunction.MULTIPLY} // Use NORMAL to see the effect
+                samples={31}
+                radius={.5}
+                intensity={60}
+              />*/}
             </EffectComposer>
 
               <Balloons

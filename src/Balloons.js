@@ -36,6 +36,8 @@ const Cam = (props) => {
 
 function Balloon(props){
   const { geo, cam } = props
+  const { scene } = useThree()
+
   const camRef = useRef()
   const geoRef = useRef()
 
@@ -75,7 +77,13 @@ function Balloon(props){
     }
   })
 
-  geo.material.roughness = .03
+  geo.material.roughness = .1
+  geo.material.metalness = 1
+  // geo.material.envMap = scene.environment
+  geo.material.envMapIntensity = 10000
+  // geo.material.envMap.mapping = THREE.SphericalReflectionMapping
+  geo.material.needsUpdate = true
+  console.log(geo.material)
 
   return (
     <group>
