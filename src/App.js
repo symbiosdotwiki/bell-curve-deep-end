@@ -98,7 +98,7 @@ function App() {
               <Bloom luminanceThreshold={.5} mipmapBlur luminanceSmoothing={0.0} intensity={.5} />
               <Outline 
                 visibleEdgeColor="yellow" 
-                hiddenEdgeColor="black" 
+                hiddenEdgeColor="yellow" 
                 blur 
                 width={512} 
                 edgeStrength={4} 
@@ -114,6 +114,7 @@ function App() {
             </Selection>
 
             <Stats />
+            <fog attach="fog" args={[`hsl(185, 100%, 60%)`, 1, 7]} density={.15} />
           </Canvas>
         </div>
       </Suspense>

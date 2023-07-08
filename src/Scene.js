@@ -120,7 +120,7 @@ export default function Scene(props) {
           color="white"
           intensity={1.9}
           position={[-2, 2, 2]}
-          shadow-mapSize={1024}
+          shadow-mapSize={2048}
           target-position={[0, 1, 0]}
           shadow-bias={-0.001}
           // onUpdate={(self) => self.target.updateMatrixWorld()}
