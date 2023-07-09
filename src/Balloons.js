@@ -62,7 +62,7 @@ function Balloon(props){
   let q = new THREE.Quaternion()
   let p = new THREE.Vector3()
 
-  const rand1 = Math.random(trackNum*999)
+  const rand1 = Math.random(trackNum*9)
   const rand2 = Math.random(trackNum*99)
 
   geo.updateWorldMatrix(true, true)
@@ -93,15 +93,16 @@ function Balloon(props){
 
   useFrame((state, dt) => {
     const time = state.clock.getElapsedTime()
-    const wiggle = Math.exp((Math.cos(time/(2 + rand2) + 99*rand1) + 1)/2) / Math.exp(0)
+    const wiggle = Math.exp((Math.cos(time/(1.5 + .5*rand2) + 99*rand1) + 1)/2) / Math.exp(0)
     geoRef.current.position.y =  p.y+ .01 * wiggle
     if(selected){
-      geoRef.current.rotation.y += .003
+      geoRef.current.rotation.y += .006
     }
   })
 
   geo.material.roughness = .1
   geo.material.metalness = .25
+  geo.material.side = THREE.DoubleSide
   // geo.material.envMap = scene.environment
   geo.material.envMapIntensity = 1
   // geo.material.envMap.mapping = THREE.SphericalReflectionMapping

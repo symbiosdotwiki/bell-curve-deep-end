@@ -95,7 +95,7 @@ function App() {
             //   curTarget: geoRef.current
             // })
           })
-          console.log(e)
+          // console.log(e)
         }}
         onEnded={(e) => {"FINISH"}}
         config={{
