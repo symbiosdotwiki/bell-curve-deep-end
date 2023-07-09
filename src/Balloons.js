@@ -78,12 +78,12 @@ function Balloon(props){
   })
 
   geo.material.roughness = .1
-  geo.material.metalness = 1
+  geo.material.metalness = .5
   // geo.material.envMap = scene.environment
-  geo.material.envMapIntensity = 10000
+  geo.material.envMapIntensity = 1
   // geo.material.envMap.mapping = THREE.SphericalReflectionMapping
   geo.material.needsUpdate = true
-  console.log(geo.material)
+  // console.log(geo.material)
 
   return (
     <group>

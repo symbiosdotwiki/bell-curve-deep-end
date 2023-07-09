@@ -2,9 +2,8 @@ import React, { useRef, useEffect } from 'react'
 
 import * as THREE from "three"
 
-import { useFrame, useThree, useLoader } from "@react-three/fiber"
+import { useFrame, useThree } from "@react-three/fiber"
 import { useGLTF, useTexture, Environment } from '@react-three/drei'
-import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader'
 
 import { useStore } from './state'
 import { mapping } from './mapping'
@@ -77,9 +76,6 @@ export default function Scene(props) {
   }, [])
 
   const hdriUrl = process.env.PUBLIC_URL + "/00024.hdr"
-  //process.env.PUBLIC_URL
-  const hdri = useLoader(RGBELoader, hdriUrl)
-  console.log(hdri)
 
   return (
     <group ref={ref} {...props} dispose={null}>
@@ -102,9 +98,10 @@ export default function Scene(props) {
       <Environment 
         // map={hdri} 
         background 
-        files={'./lakes_4k.hdr'}
+        // preset={'sunset'}
+        files={hdriUrl}
       />
-      <ambientLight intensity={.5} />
+      {/*<ambientLight intensity={.5} />*/}
       <group ref={lightRef}>
         <directionalLight
           castShadow
