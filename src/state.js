@@ -7,6 +7,7 @@ export const defaultState = {
   curTrack: 0,
   cam: null,
   curTarget: null,
+  dofTarget: new THREE.Vector3(0,1.5,0),
 }
 
 export const useStore = create((set) => ({

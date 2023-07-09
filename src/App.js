@@ -29,18 +29,22 @@ function Loading() {
 
 function App() {
   const scRef = useRef()
+
   const curTrack = useStore((state) => state.curTrack)
   const curTarget = useStore((state) => state.curTarget)
-
-  
-  let dofTarget = new THREE.Vector3(0,1.5,0)
-  if(curTarget)
-    dofTarget = curTarget.position
+  const nextCam = useStore((state) => state.nextCam)
+  const nextTarget = useStore((state) => state.nextTarget)
+  const dofTarget = useStore((state) => state.dofTarget)
 
   if(curTrack != null && scRef.current){
     // console.log('hi', curTrack)
     // console.log(scRef.current, scRef.current.getInternalPlayer())
-    scRef.current.getInternalPlayer().skip(curTrack)
+    scRef.current.getInternalPlayer().getCurrentSoundIndex((e)=>{
+      if(e != curTrack){
+        scRef.current.getInternalPlayer().skip(curTrack)
+        // scRef.current.getInternalPlayer().seekTo(160000)
+      }
+    })
   }
 
   useEffect(() => {
@@ -49,9 +53,14 @@ function App() {
       if(e.code==='Space')
         scRef.current.getInternalPlayer().toggle()
     }
+    const setNextTrack = (e) => {
+      console.log(e)
+    }
     document.addEventListener('keyup', handleKeyUp)
+    // scRef.current.getInternalPlayer().bind(SC.Widget.Events.FINISH, setNextTrack)
     return () => {
       document.removeEventListener('keyup', handleKeyUp)
+      // scRef.current.getInternalPlayer().unbind(SC.Widget.Events.FINISH, setNextTrack)
     }
   }, [])
 
@@ -64,11 +73,37 @@ function App() {
         width={'100%'}
         height={'10%'}
         ref={scRef}
+        onPlay={() => {
+          // console.log("PLAY")
+        }}
+        onProgress={(e) => {
+          scRef.current.getInternalPlayer().getCurrentSoundIndex((e)=>{
+            if(e != curTrack){
+              // console.log(e)
+              useStore.setState({ 
+                curTrack: e,
+                cam: nextCam,
+                curTarget: nextTarget,
+                // nextTarget: nextTarget,
+                // nextCam: nextCam
+                // dofTarget: p
+              })
+            }
+            // useStore.setState({ 
+            //   curTrack: trackNum,
+            //   cam: camRef.current,
+            //   curTarget: geoRef.current
+            // })
+          })
+          console.log(e)
+        }}
+        onEnded={(e) => {"FINISH"}}
         config={{
           playing:true,
           soundcloud:{
             options:{
               start_track:curTrack,
+              auto_play:false
             }
           }
         }}
@@ -98,7 +133,8 @@ function App() {
                 bokehScale={8} 
                 height={512} 
               />
-              <Bloom luminanceThreshold={.5} mipmapBlur luminanceSmoothing={0.0} intensity={.5} />
+              <Bloom luminanceThreshold={.5} mipmapBlur luminanceSmoothing={0.0} intensity={.35} />
+              <Bloom luminanceThreshold={.75} mipmapBlur luminanceSmoothing={0.0} intensity={5} />
               <Outline 
                 visibleEdgeColor="yellow" 
                 hiddenEdgeColor="yellow" 
