@@ -3,7 +3,7 @@ import React, { useRef, useEffect } from 'react'
 import * as THREE from "three"
 
 import { useFrame, useThree } from "@react-three/fiber"
-import { useGLTF, useTexture, Environment } from '@react-three/drei'
+import { useGLTF, useTexture, Environment, Sparkles } from '@react-three/drei'
 
 import { useStore } from './state'
 import { mapping } from './mapping'
@@ -84,8 +84,14 @@ export default function Scene(props) {
         const mat = materials[key]
         const cam = nodes[key + '_Cam']
 
+        if(geo.material)
+          geo.material.metalness = 0
+
         if(geo.name.includes('OUT'))
           geo.material.side = THREE.DoubleSide
+
+        if(geo.name.includes('Sand'))
+          geo.material.roughness = .9
 
         return <mesh 
           castShadow receiveShadow
@@ -95,6 +101,7 @@ export default function Scene(props) {
           material={geo.material}
         />
       })}
+      <Sparkles count={1000} scale={4} speed={.3} opacity={.5}/>
       <Environment 
         // map={hdri} 
         background 

@@ -78,7 +78,7 @@ function Balloon(props){
   })
 
   geo.material.roughness = .1
-  geo.material.metalness = .5
+  geo.material.metalness = .25
   // geo.material.envMap = scene.environment
   geo.material.envMapIntensity = 1
   // geo.material.envMap.mapping = THREE.SphericalReflectionMapping
