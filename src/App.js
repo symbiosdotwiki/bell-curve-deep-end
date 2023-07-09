@@ -134,7 +134,7 @@ function App() {
                 height={512} 
               />
               <Bloom luminanceThreshold={.5} mipmapBlur luminanceSmoothing={0.0} intensity={.35} />
-              <Bloom luminanceThreshold={.75} mipmapBlur luminanceSmoothing={0.0} intensity={5} />
+              <Bloom luminanceThreshold={.75} mipmapBlur luminanceSmoothing={0.0} intensity={1} />
               <Outline 
                 visibleEdgeColor="yellow" 
                 hiddenEdgeColor="yellow" 

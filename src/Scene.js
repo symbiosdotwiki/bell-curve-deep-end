@@ -92,7 +92,7 @@ export default function Scene(props) {
 
         if(geo.name.includes('Sand'))
           geo.material.roughness = .9
-
+        // return
         return <mesh 
           castShadow receiveShadow
           key={idx}
