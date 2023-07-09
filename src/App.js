@@ -159,7 +159,7 @@ function App() {
             </Selection>
 
             <Stats />
-            <fog attach="fog" args={[`hsl(205, 100%, 80%)`, .5, 5]} density={.15} />
+            <fog attach="fog" args={[`hsl(195, 69%, 48%)`, .5, 5]} density={.15} />
           </Canvas>
         </div>
       </Suspense>
