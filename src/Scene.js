@@ -75,7 +75,7 @@ export default function Scene(props) {
     resetView()
   }, [])
 
-  const hdriUrl = process.env.PUBLIC_URL + "/00024.hdr"
+  const hdriUrl = process.env.PUBLIC_URL + "/00025.hdr"
 
   return (
     <group ref={ref} {...props} dispose={null}>
