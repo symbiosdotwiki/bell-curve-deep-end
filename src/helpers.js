@@ -17,3 +17,12 @@ export function findValuesByKey(obj, key, ignore) {
 
   return values;
 }
+
+export function angleDist(angle1, angle2) {
+  const distance = Math.abs(angle1 - angle2) % (2 * Math.PI);
+  return distance > Math.PI ? (2 * Math.PI) - distance : distance;
+};
+
+export function lerp(v1, v2, amt) {
+  return amt * v1 + (1-amt) * v2
+}

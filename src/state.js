@@ -4,10 +4,21 @@ import * as THREE from "three"
 // export const scURL = 'https://soundcloud.com/bell_curve/sets/deep-end-mastered/s-nEZAnDMbc0Z'
 export const scURL = "https://api.soundcloud.com/playlists/1648753261?secret_token=s-nEZAnDMbc0Z"
 export const defaultState = {
-  curTrack: 0,
-  cam: null,
-  curTarget: null,
-  dofTarget: new THREE.Vector3(0,1.5,0),
+  'curTrack': 0,
+  'cam': null,
+  'curTarget': null,
+  'dofTarget': new THREE.Vector3(0,1.5,0),
+  'Anemone' : false,
+  'Coral' : false,
+  'Crab' : false,
+  'Shark' : false,
+  'Dolphin' : false,
+  'Seahorse' : false,
+  'Pufferfish' : false,
+  'Clownfish' : false,
+  'Shell' : false,
+  'Turtle' : false,
+  'Jellyfish' : false,
 }
 
 export const useStore = create((set) => ({

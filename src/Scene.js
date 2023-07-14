@@ -2,21 +2,12 @@ import React, { useRef, useEffect } from 'react'
 
 import * as THREE from "three"
 
-import { useFrame, useThree } from "@react-three/fiber"
+import { useFrame } from "@react-three/fiber"
 import { useGLTF, useTexture, Environment, Sparkles } from '@react-three/drei'
 
-import { useStore } from './state'
-import { mapping } from './mapping'
 import { findValuesByKey } from './helpers'
 
 const gltfURL = process.env.PUBLIC_URL + '/scene.glb'
-
-const defCam = new THREE.PerspectiveCamera()
-defCam.position.y = 1.5
-defCam.position.x = -1.5
-defCam.position.z = 0
-defCam.lookAt(0, .8, 0)
-
 
 
 export default function Scene(props) {
@@ -26,14 +17,10 @@ export default function Scene(props) {
   const gltf = useGLTF(gltfURL)
   const { nodes, materials } = gltf
 
-  const { camera } = useThree()
   let { p, q } = props
 
-  let qDef = new THREE.Quaternion(camera.quaternion)
-  let pDef = new THREE.Vector3(camera.position)
-
-  const cam = useStore((state) => state.cam)
-  const curTrack = useStore((state) => state.curTrack)
+  console.log('RERENDER: SCENE')
+  // console.log('cam: ', cam, 'curTrack: ', curTrack)
 
   gltf.scene.children.forEach((mesh, i) => {
         mesh.castShadow = true;
@@ -44,36 +31,13 @@ export default function Scene(props) {
     !key.includes('_Cam') && !key.includes('_CAM') && !key.includes('Root')
   )
 
-  const resetView = () => {
-    q.copy(defCam.quaternion)
-    p.copy(defCam.position)
-  }
-
-  if(cam == null) resetView()
-  else {
-    cam.updateWorldMatrix(true, true)
-    cam.getWorldPosition(p.set(0,0,0))
-    cam.getWorldQuaternion(q)
-  }
 
   let mats = findValuesByKey(gltf.scene.children, 'material', ['parent'])
 
   useFrame((state, dt) => {
-    const lerpAmt = .05
-
     const time = state.clock.getElapsedTime()
-    lightRef.current.rotation.y = time/40
-
-    camera.quaternion.slerp(q, lerpAmt)
-    camera.position.lerp(p, lerpAmt)
-    state.camera.updateProjectionMatrix()
+    lightRef.current.rotation.y = Math.sin(time/20) - .25 * Math.PI
   })
-  
-  useEffect(() => {
-    camera.position.copy(defCam.position)
-    camera.quaternion.copy(defCam.quaternion)
-    resetView()
-  }, [])
 
   const hdriUrl = process.env.PUBLIC_URL + "/00025.hdr"
 
@@ -92,28 +56,25 @@ export default function Scene(props) {
 
         if(geo.name.includes('Sand'))
           geo.material.roughness = .9
-        // return
+
         return <mesh 
           castShadow receiveShadow
           key={idx}
           geometry={geo.geometry}
-          // material={matt}
           material={geo.material}
         />
       })}
       <Sparkles count={1000} scale={4} speed={.3} opacity={.5}/>
       <Environment 
-        // map={hdri} 
         background 
-        // preset={'sunset'}
         files={hdriUrl}
       />
-      {/*<ambientLight intensity={.5} />*/}
+      <ambientLight intensity={.15} />
       <group ref={lightRef}>
         <directionalLight
           castShadow
           color="white"
-          intensity={1.9}
+          intensity={1.3}
           position={[-2, 2, 2]}
           shadow-mapSize={2048}
           target-position={[0, 1, 0]}
@@ -124,11 +85,6 @@ export default function Scene(props) {
       </group>
     </group>
   )
-}
-
-Scene.defaultProps = {
-  p : new THREE.Vector3(-2,2,0),
-  q : new THREE.Quaternion(),
 }
 
 useGLTF.preload(gltfURL)
