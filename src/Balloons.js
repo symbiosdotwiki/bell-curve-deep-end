@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 
 import * as THREE from "three"
-import { useFrame, useThree } from "@react-three/fiber"
+import { useFrame } from "@react-three/fiber"
 import { useGLTF, PerspectiveCamera } from '@react-three/drei'
 
 import { 
@@ -11,7 +11,7 @@ import {
 
 import { useStore } from './state'
 import { mapping, tracklist } from './mapping'
-import { angleDist, lerp } from './helpers'
+import { angleDist } from './helpers'
 
 const gltfURL = process.env.PUBLIC_URL + '/balloons.glb'
 
@@ -35,7 +35,6 @@ const Cam = (props) => {
 
 function Balloon(props){
   const { geo, cam, meshes, nodes } = props
-  const { scene } = useThree()
 
   const camRef = useRef()
   const geoRef = useRef()
@@ -45,7 +44,7 @@ function Balloon(props){
 
   const trackNum = tracklist.indexOf(mapping[geo.name])
 
-  console.log('RERENDER: ', geo.name)
+  // console.log('RERENDER: ', geo.name)
 
   const curTarget = useStore(
     (state) => state.curTarget,
@@ -62,7 +61,7 @@ function Balloon(props){
   const nextCam = nodes[nextMesh + "_Cam"]
 
 
-  const selected = curTarget && curTarget == geo.name
+  const selected = curTarget && curTarget === geo.name
 
   let q = new THREE.Quaternion()
   let p = new THREE.Vector3()
@@ -72,8 +71,8 @@ function Balloon(props){
 
   geo.updateWorldMatrix(true, true)
   geo.getWorldPosition(p.set(0,0,0))
-  console.log(geo.name, ' oTheta: ', oTheta)
-  console.log(geo.name, ' curTheta: ', curTheta)
+  // console.log(geo.name, ' oTheta: ', oTheta)
+  // console.log(geo.name, ' curTheta: ', curTheta)
   if(curTheta.current == 0)
     geo.getWorldQuaternion(q)
 

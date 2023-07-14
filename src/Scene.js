@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 
 import * as THREE from "three"
 
 import { useFrame } from "@react-three/fiber"
-import { useGLTF, useTexture, Environment, Sparkles } from '@react-three/drei'
+import { useGLTF, Environment, Sparkles } from '@react-three/drei'
 
 import { findValuesByKey } from './helpers'
 
@@ -17,10 +17,7 @@ export default function Scene(props) {
   const gltf = useGLTF(gltfURL)
   const { nodes, materials } = gltf
 
-  let { p, q } = props
-
-  console.log('RERENDER: SCENE')
-  // console.log('cam: ', cam, 'curTrack: ', curTrack)
+  // console.log('RERENDER: SCENE')
 
   gltf.scene.children.forEach((mesh, i) => {
         mesh.castShadow = true;
@@ -30,10 +27,7 @@ export default function Scene(props) {
   const meshes = Object.keys(nodes).filter(key => 
     !key.includes('_Cam') && !key.includes('_CAM') && !key.includes('Root')
   )
-
-
-  let mats = findValuesByKey(gltf.scene.children, 'material', ['parent'])
-
+  
   useFrame((state, dt) => {
     const time = state.clock.getElapsedTime()
     lightRef.current.rotation.y = Math.sin(time/20) - .25 * Math.PI
@@ -45,8 +39,6 @@ export default function Scene(props) {
     <group ref={ref} {...props} dispose={null}>
       {meshes.map((key,idx) => {
         const geo = nodes[key]
-        const mat = materials[key]
-        const cam = nodes[key + '_Cam']
 
         if(geo.material)
           geo.material.metalness = 0
