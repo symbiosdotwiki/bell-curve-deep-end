@@ -13,8 +13,11 @@ import Cam from './Cam'
 import PostProcessing from './PostProcessing'
 import SC from './SC'
 
+import { glCheck, mobileAndTabletCheck } from './helpers'
+
 import logo from './logo.svg'
 import './App.css'
+
 
 function Loading() {
   return (
@@ -26,6 +29,13 @@ function Loading() {
 
 function App() {
 
+  const glInfo = glCheck()
+  const isMobile = mobileAndTabletCheck()
+
+  const hasGL = glInfo.error ? false : true
+  const hdState = glInfo.card === null || isMobile ? false : true
+  const pixRat = hdState ? 1 : .5
+
   // console.log('RERENDER: APP')
 
   return (
@@ -35,9 +45,16 @@ function App() {
       <SC/>
 
       <Suspense fallback={<Loading/>}>
-        <div className="THREE">
+        <div className="THREE" 
+          // style={{ 
+              // width: "50vw", height: "50vh",
+              // transform: 'scale(3)',
+              // transformOrigin: 'top left'
+          // }}
+        >
           <Canvas 
-            shadows 
+            shadows
+            dpr={window.devicePixelRatio*pixRat}
             onPointerMissed={(e)=>{
               // console.log('POINTER MISSED')
               useStore.setState({ 

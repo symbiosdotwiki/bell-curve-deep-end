@@ -77,6 +77,7 @@ function Balloon(props){
     geo.getWorldQuaternion(q)
 
   const clickGeo = (e) => {
+    geo.getWorldPosition(p)
     if(e) e.stopPropagation()
     useStore.setState({ 
       curTrack: trackNum,
@@ -99,7 +100,7 @@ function Balloon(props){
     if(selected){
       curTheta.current += .006
     }
-    else if( dist > .01){
+    else if( dist > .001){
       if(curTheta.current < oTheta)
         curTheta.current += dist * .1
       else 

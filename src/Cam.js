@@ -36,7 +36,7 @@ export default function Cam(props) {
   }
 
   useFrame((state, dt) => {
-  	if(camera.position.distanceTo(p) > .01){
+  	if(camera.position.distanceTo(p) > .001){
 	    const lerpAmt = .05
 
 	    const time = state.clock.getElapsedTime()
