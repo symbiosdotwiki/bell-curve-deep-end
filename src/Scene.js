@@ -11,13 +11,17 @@ const gltfURL = process.env.PUBLIC_URL + '/scene.glb'
 
 
 export default function Scene(props) {
+  const { pixRat } = props
+
   const ref = useRef()
   const lightRef = useRef()
 
   const gltf = useGLTF(gltfURL)
   const { nodes, materials } = gltf
 
-  // console.log('RERENDER: SCENE')
+  console.log('RERENDER: SCENE', pixRat)
+
+  const shadowSize = Math.min(Math.floor(2048 * pixRat), 1024)
 
   gltf.scene.children.forEach((mesh, i) => {
         mesh.castShadow = true;
@@ -27,7 +31,7 @@ export default function Scene(props) {
   const meshes = Object.keys(nodes).filter(key => 
     !key.includes('_Cam') && !key.includes('_CAM') && !key.includes('Root')
   )
-  
+
   useFrame((state, dt) => {
     const time = state.clock.getElapsedTime()
     lightRef.current.rotation.y = Math.sin(time/20) - .25 * Math.PI
@@ -68,7 +72,7 @@ export default function Scene(props) {
           color="white"
           intensity={1.3}
           position={[-2, 2, 2]}
-          shadow-mapSize={2048}
+          shadow-mapSize={shadowSize}
           target-position={[0, 1, 0]}
           shadow-bias={-0.001}
         >

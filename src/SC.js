@@ -3,15 +3,17 @@ import { useStore, scURL } from './state'
 import ReactPlayer from 'react-player/soundcloud'
 
 function TrackSelector(props) {
-	const { selectTrack, setNext } = props
+	const { selectTrack, setNext, playPause } = props
 
 	const curCam = useStore((state) => state.cam)
 	const curTrack = useStore((state) => state.curTrack)
   const nextCam = useStore((state) => state.nextCam)
   const nextTarget = useStore((state) => state.nextTarget)
+  const playing = useStore((state) => state.playing)
 
   selectTrack(curTrack)
   setNext(nextCam, nextTarget, curCam)
+  playPause(playing)
 
 	return 
 }
@@ -25,6 +27,15 @@ export default function SC() {
   let curCam = null
 
   // console.log('RERENDER: SC')
+
+  const playPause = (playing) => {
+  	if(!scRef.current)
+  		return
+  	if(playing)
+  		scRef.current.getInternalPlayer().play()
+  	else
+  		scRef.current.getInternalPlayer().pause()
+  }
 
   const selectTrack = (track) => {
   	curTrack = track
@@ -41,7 +52,7 @@ export default function SC() {
 	const checkAndSetNext = (e) => {
 		scRef.current.getInternalPlayer().getCurrentSoundIndex((e)=>{
       if(e != curTrack){
-        console.log('SOUND ENDED')
+        // console.log('SOUND ENDED')
         useStore.setState({ 
           curTrack: e,
           cam: curCam ? nextCam : curCam,
@@ -95,6 +106,7 @@ export default function SC() {
 		  <TrackSelector
 		  	selectTrack={selectTrack}
 		  	setNext={setNext}
+		  	playPause={playPause}
 		  />
 	  </>
   )

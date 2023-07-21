@@ -8,17 +8,7 @@ export const defaultState = {
   'cam': null,
   'curTarget': null,
   'dofTarget': new THREE.Vector3(0,1.5,0),
-  'Anemone' : false,
-  'Coral' : false,
-  'Crab' : false,
-  'Shark' : false,
-  'Dolphin' : false,
-  'Seahorse' : false,
-  'Pufferfish' : false,
-  'Clownfish' : false,
-  'Shell' : false,
-  'Turtle' : false,
-  'Jellyfish' : false,
+  'playing' : false,
 }
 
 export const useStore = create((set) => ({

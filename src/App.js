@@ -57,26 +57,28 @@ function App() {
             dpr={window.devicePixelRatio*pixRat}
             onPointerMissed={(e)=>{
               // console.log('POINTER MISSED')
+              const playing = useStore.getState().playing
+              const curCam = useStore.getState().cam
+              const curTarget = useStore.getState().curTarget
               useStore.setState({ 
                 cam: null,
+                playing: curCam === null && curTarget ? !playing : playing
               })
             }}
           >
             <Selection>
               <Scene
-                // resetCam={() => resetCam()}
-                // portrait={dimensions.portrait}
+                pixRat={pixRat}
               />
-              <Balloons
-                // resetCam={() => resetCam()}
-                // portrait={dimensions.portrait}
-              />
+              <Balloons/>
               <Cam/>
-              <PostProcessing/>
+              <PostProcessing pixRat={pixRat}/>
             </Selection>
           </Canvas>
+
         </div>
       </Suspense>
+      
     </div>
   )
 }

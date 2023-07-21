@@ -7,7 +7,8 @@ import {
 import { BlendFunction } from 'postprocessing'
 
 
-function Effects() {
+function Effects(props) {
+	const { pixRat } = props
 	const dofTarget = useStore((state) => state.dofTarget)
 
 	// console.log('RERENDER: Post Processing', dofTarget)
@@ -18,7 +19,7 @@ function Effects() {
 	      target={dofTarget} 
 	      focalLength={0.002} 
 	      bokehScale={8} 
-	      height={512} 
+	      height={1024 * pixRat} 
 	    />
 	    <Bloom luminanceThreshold={.5} mipmapBlur luminanceSmoothing={0.0} intensity={.35} />
 	    <Bloom luminanceThreshold={.75} mipmapBlur luminanceSmoothing={0.0} intensity={1} />
@@ -26,7 +27,7 @@ function Effects() {
 	      visibleEdgeColor="turquoise" 
 	      hiddenEdgeColor="turquoise" 
 	      blur 
-	      width={512} 
+	      width={1024 * pixRat} 
 	      edgeStrength={4} 
 	      blendFunction={BlendFunction.ALPHA}
 	      pulseSpeed={.2}
@@ -35,7 +36,8 @@ function Effects() {
   )
 }
 
-export default function PostProcessing() {
+export default function PostProcessing(props) {
+	const { pixRat } = props
 
   // console.log('RERENDER: Post Processing')
 
@@ -43,8 +45,8 @@ export default function PostProcessing() {
   	<>
   		<Stats />
 			<fog attach="fog" args={[`hsl(195, 69%, 48%)`, .5, 5]} density={.15} />
-	  	<SoftShadows size={10} samples={5} />
-	    <Effects/>
+	  	<SoftShadows size={10} samples={10} />
+	    <Effects pixRat={pixRat}/>
 	  </>
   )
 }

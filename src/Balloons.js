@@ -77,6 +77,8 @@ function Balloon(props){
     geo.getWorldQuaternion(q)
 
   const clickGeo = (e) => {
+    const playing = useStore.getState().playing
+    const curCam = useStore.getState().cam
     geo.getWorldPosition(p)
     if(e) e.stopPropagation()
     useStore.setState({ 
@@ -85,11 +87,13 @@ function Balloon(props){
       curTarget: geo.name,
       nextTarget: nextTarget,
       nextCam: nextCam,
-      dofTarget: p
+      dofTarget: p,
+      playing: selected && curCam == camRef.current ? !playing : true
     })
   }
 
   useFrame((state, dt) => {
+    const playing = useStore.getState().playing
     let rot = geoRef.current.rotation
 
     const time = state.clock.getElapsedTime()
@@ -98,7 +102,7 @@ function Balloon(props){
 
     const dist = angleDist(curTheta.current, oTheta)
     if(selected){
-      curTheta.current += .006
+      curTheta.current += playing ? .006 : .001
     }
     else if( dist > .001){
       if(curTheta.current < oTheta)
