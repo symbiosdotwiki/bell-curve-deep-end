@@ -30,6 +30,7 @@
   width: 100%;
   height: 100%;
   filter: url(#filter);
+  touch-action: none;
 }
 
 @keyframes blobs{
