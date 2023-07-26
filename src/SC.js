@@ -71,8 +71,13 @@ export default function SC() {
   useEffect(() => {
     const handleKeyUp = (e) => {
       // console.log(e.code)
-      if(e.code==='Space')
-        scRef.current.getInternalPlayer().toggle()
+      if(e.code==='Space'){
+      	const playing = useStore.getState().playing
+        // scRef.current.getInternalPlayer().toggle()
+        useStore.setState({ 
+        	playing: !playing
+        })
+      }
     }
     const setNextTrack = (e) => {
       console.log(e)

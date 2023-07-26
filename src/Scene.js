@@ -1,8 +1,11 @@
 import React, { useRef } from 'react'
 
+import { useDrag } from 'react-use-gesture'
+import { useStore } from './state'
+
 import * as THREE from "three"
 
-import { useFrame } from "@react-three/fiber"
+import { useFrame, useThree } from "@react-three/fiber"
 import { useGLTF, Environment, Sparkles } from '@react-three/drei'
 
 import { findValuesByKey } from './helpers'
@@ -19,9 +22,9 @@ export default function Scene(props) {
   const gltf = useGLTF(gltfURL)
   const { nodes, materials } = gltf
 
-  console.log('RERENDER: SCENE', pixRat)
+  // console.log('RERENDER: SCENE', pixRat)
 
-  const shadowSize = Math.min(Math.floor(2048 * pixRat), 1024)
+  const shadowSize = 2048;//Math.min(Math.floor(2048 * pixRat), 1024)
 
   gltf.scene.children.forEach((mesh, i) => {
         mesh.castShadow = true;
@@ -37,10 +40,38 @@ export default function Scene(props) {
     lightRef.current.rotation.y = Math.sin(time/20) - .25 * Math.PI
   })
 
+  // const bind = useDrag(
+  //   ({down, movement: [x, y], event }) => {
+  //     const moved = Math.sqrt(x*x + y*y)
+  //     // if(!moved){
+  //     //   const playing = useStore.getState().playing
+  //     //   const curCam = useStore.getState().cam
+  //     //   const curTarget = useStore.getState().curTarget
+  //     //   useStore.setState({ 
+  //     //     cam: null,
+  //     //     playing: curCam === null && curTarget ? !playing : playing
+  //     //   })
+  //     // }
+  //     useStore.setState({
+  //       drag: [
+  //         x / aspect, 
+  //         -y / aspect, 
+  //         moved > .02 ? down : false
+  //       ],
+  //     })
+  //     if(!down){
+  //       // let planeIntersectPoint = new THREE.Vector3()
+  //       // event.ray.intersectPlane(floorPlane, planeIntersectPoint)
+  //       console.log(moved)
+  //     }
+  //   },
+  //   { pointerEvents: true, capture: false }
+  // )
+
   const hdriUrl = process.env.PUBLIC_URL + "/00025.hdr"
 
   return (
-    <group ref={ref} {...props} dispose={null}>
+    <group ref={ref} {...props} dispose={null} >
       {meshes.map((key,idx) => {
         const geo = nodes[key]
 

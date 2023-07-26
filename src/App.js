@@ -1,7 +1,9 @@
 import { Suspense, useEffect } from "react"
 
-import { Canvas, useLoader } from '@react-three/fiber'
+import { Canvas, useLoader, useThree } from '@react-three/fiber'
 import { useStore, scURL } from './state'
+
+import { useDrag } from 'react-use-gesture'
 
 import { 
   Selection
@@ -36,6 +38,29 @@ function App() {
   const hdState = glInfo.card === null || isMobile ? false : true
   const pixRat = hdState ? 1 : .5
 
+  // const { size, viewport } = useThree()
+  const aspect = 1//size.width / viewport.width
+
+  const bind = useDrag(
+    ({down, movement: [x, y], event }) => {
+      const moved = Math.sqrt(x*x + y*y)
+      // console.log(moved)
+      useStore.setState({
+        drag: [
+          x, 
+          -y, 
+          moved > 1 ? down : false
+        ],
+      })
+      // if(!down){
+      //   let planeIntersectPoint = new THREE.Vector3()
+      //   event.ray.intersectPlane(floorPlane, planeIntersectPoint)
+      //   console.log(moved)
+      // }
+    },
+    // { pointerEvents: true }
+  )
+
   // console.log('RERENDER: APP')
 
   return (
@@ -46,6 +71,7 @@ function App() {
 
       <Suspense fallback={<Loading/>}>
         <div className="THREE" 
+        {...bind()}
           // style={{ 
               // width: "50vw", height: "50vh",
               // transform: 'scale(3)',
@@ -78,7 +104,7 @@ function App() {
 
         </div>
       </Suspense>
-      
+
     </div>
   )
 }
