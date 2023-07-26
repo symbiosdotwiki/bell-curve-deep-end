@@ -58,7 +58,7 @@ function App() {
       //   console.log(moved)
       // }
     },
-    // { pointerEvents: true }
+    { pointerEvents: true, pointer: { touch: true } }
   )
 
   // console.log('RERENDER: APP')
