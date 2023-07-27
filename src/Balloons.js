@@ -13,6 +13,8 @@ import { useStore } from './state'
 import { mapping, tracklist } from './mapping'
 import { angleDist } from './helpers'
 
+import TrackTitle from './TrackTitle'
+
 const gltfURL = process.env.PUBLIC_URL + '/balloons.glb'
 
 const Cam = (props) => {
@@ -128,17 +130,25 @@ function Balloon(props){
   return (
     <group>
       <Cam camRef={camRef} cam={cam} />
-      <Select name={geo.name} enabled={selected}>
-        <mesh 
-          castShadow receiveShadow
-          geometry={geo.geometry} 
-          material={geo.material}
-          position={p}
-          quaternion={q}
-          ref={geoRef}
-          onClick={clickGeo}
+      <group 
+        position={p}
+        quaternion={q}
+        ref={geoRef}
+        onClick={clickGeo}
+      >
+        <Select name={geo.name} enabled={selected}>
+        <TrackTitle
+          name={mapping[geo.name]}
+          visible={selected}
+          // visible={true}
         />
-        </Select>
+          <mesh 
+            castShadow receiveShadow
+            geometry={geo.geometry} 
+            material={geo.material}
+          />
+          </Select>
+        </group>
       </group>
     )
 }

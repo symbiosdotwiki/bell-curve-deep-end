@@ -12,7 +12,6 @@ import { findValuesByKey } from './helpers'
 
 const gltfURL = process.env.PUBLIC_URL + '/scene.glb'
 
-
 export default function Scene(props) {
   const { pixRat } = props
 

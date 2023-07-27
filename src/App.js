@@ -17,14 +17,17 @@ import SC from './SC'
 
 import { glCheck, mobileAndTabletCheck } from './helpers'
 
-import logo from './logo.svg'
+// import logo from './logo.svg'
 import './App.css'
+
+const mainLogo = process.env.PUBLIC_URL + '/bellcurve.png'
 
 
 function Loading() {
   return (
     <div className="LOADING">
-      LOADING
+      {/*LOADING*/}
+    <img  src={mainLogo} />
     </div>
   )
 }
