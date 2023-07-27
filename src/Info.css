@@ -1,0 +1,130 @@
+@media (max-aspect-ratio: 1) {
+
+  .THREE {
+    height: 75%;
+    width: 100%;
+  }
+
+  .INFO {
+    position: absolute;
+    top: 75%;
+    width: 100%;
+    height: 25%;
+    background: hsl(180, 20%, 95%);
+    box-shadow: inset 1px 0px 20px hsl(180, 40%, 20%);
+
+    font-size: 2.2vh;
+    color: hsl(0, 90%, 90%);
+    text-shadow: 2px 2px 5px pink;
+  }
+
+  .INFO img {
+    position: absolute;
+    left: 6%;
+    top: 50%;
+    max-height: 90%;
+    width: 20%;
+    transform: translateY(-50%);
+    -webkit-filter: drop-shadow(5px 5px 7px pink);
+    filter: drop-shadow(5px 5px 7px pink);
+  }
+
+  .TITLE {
+    height: 90%;
+    font-size: 6vmax;
+    position: absolute;
+    left: 6%;
+    top: 70%;
+    text-emphasis-position: 50%;
+    transform: translateY(-50%);
+  }
+
+  .TrackInfo {
+    height: 90%;
+    position: absolute;
+    left: 66%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .Playing {
+    height: 90%;
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: hsl(180, 90%, 90%);
+    text-shadow: 2px 2px 5px turquoise;
+  }
+
+}
+
+@media (min-aspect-ratio: 1) {
+
+  .LINKS {
+    position: absolute;
+    bottom: 4%;
+    left: 50%;
+    transform: translatex(-50%);
+  }
+
+  .LINKS svg {
+    fill: hsl(0, 90%, 90%);
+    filter: drop-shadow(2px 2px 4px pink);
+  }
+
+  .THREE {
+    width: 75%;
+    height: 100%;
+  }
+
+  .INFO {
+    position: absolute;
+    left: 75%;
+    height: 100%;
+    width: 25%;
+    background: hsl(180, 20%, 95%);
+    box-shadow: inset 1px 0px 20px hsl(180, 40%, 20%);
+
+    font-size: 2.2vw;
+    color: hsl(0, 90%, 90%);
+    text-shadow: 2px 2px 5px pink;
+  }
+
+  .INFO img {
+    position: absolute;
+    top: 6%;
+    width: 95%;
+    transform: translateX(-50%);
+    -webkit-filter: drop-shadow(5px 5px 7px pink);
+    filter: drop-shadow(5px 5px 7px pink);
+  }
+
+  .TITLE {
+    width: 95%;
+    font-size: 5vmax;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .TrackInfo {
+    font-size: 3.5vw;
+    width: 95%;
+    position: absolute;
+    top: 66%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .Playing {
+    font-size: 3vw;
+    width: 90%;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: hsl(180, 90%, 90%);
+    text-shadow: 2px 2px 5px turquoise;
+  }
+
+}

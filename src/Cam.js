@@ -60,6 +60,17 @@ export default function Cam(props) {
   }
 
   useFrame((state, dt) => {
+    const time = state.clock.getElapsedTime() * .5
+    const zoom = 1.2 * Math.min(
+      viewport.width / viewport.height,
+      1
+    )
+    camera.zoom = zoom  + .03 * (Math.sin(time) + 1) / 2
+    camera.position.addScaledVector(new THREE.Vector3(
+      Math.sin(time), Math.sin(time*1.1), Math.cos(time*.9)
+    ), .002
+    )
+
     let curTarget = new THREE.Vector3()
     getTarget(camera, camOffset.length(), curTarget)
     const drag = useStore.getState().drag
@@ -110,7 +121,7 @@ export default function Cam(props) {
       // console.log(drag)
     }
     camera.lookAt(camTarget)
-    // state.camera.updateProjectionMatrix()
+    state.camera.updateProjectionMatrix()
   })
   
   useEffect(() => {

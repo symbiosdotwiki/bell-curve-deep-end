@@ -137,11 +137,11 @@ function Balloon(props){
         onClick={clickGeo}
       >
         <Select name={geo.name} enabled={selected}>
-        <TrackTitle
+        {/*<TrackTitle
           name={mapping[geo.name]}
           visible={selected}
           // visible={true}
-        />
+        />*/}
           <mesh 
             castShadow receiveShadow
             geometry={geo.geometry} 

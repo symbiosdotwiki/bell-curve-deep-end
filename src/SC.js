@@ -18,8 +18,8 @@ function TrackSelector(props) {
 	return 
 }
 
-export default function SC() {
-  const scRef = useRef()
+export default function SC(props) {
+  const { scRef } = props
 
   let nextCam = null
   let nextTarget = null
@@ -44,6 +44,9 @@ export default function SC() {
 	      if(e != curTrack){
 	        scRef.current.getInternalPlayer().skip(curTrack)
 	        scRef.current.getInternalPlayer().seekTo(0)
+	        scRef.current.getInternalPlayer().getCurrentSound((e) => {
+						useStore.setState({ trackTitle : e.title })
+					})
 	      }
 	    })
 	  }
@@ -52,7 +55,6 @@ export default function SC() {
 	const checkAndSetNext = (e) => {
 		scRef.current.getInternalPlayer().getCurrentSoundIndex((e)=>{
       if(e != curTrack){
-        // console.log('SOUND ENDED')
         useStore.setState({ 
           curTrack: e,
           cam: curCam ? nextCam : curCam,

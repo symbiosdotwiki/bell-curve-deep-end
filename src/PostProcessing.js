@@ -2,7 +2,8 @@ import { useStore, scURL } from './state'
 
 import { SoftShadows, Stats } from "@react-three/drei"
 import { 
-  EffectComposer, DepthOfField, Bloom, Selection, Outline
+  EffectComposer, DepthOfField, Bloom, Selection, Outline, 
+  Vignette, ChromaticAberration,
 } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 
@@ -10,8 +11,6 @@ import { BlendFunction } from 'postprocessing'
 function Effects(props) {
 	const { pixRat } = props
 	const dofTarget = useStore((state) => state.dofTarget)
-
-	// console.log('RERENDER: Post Processing', dofTarget)
 
 	return (
 		<EffectComposer multisampling={0} autoClear={false}>
@@ -32,6 +31,16 @@ function Effects(props) {
 	      blendFunction={BlendFunction.ALPHA}
 	      pulseSpeed={.2}
 	    />
+	    <Vignette
+        offset={.5}
+        darkness={.5}
+        eskil={false}
+        blendFunction={BlendFunction.NORMAL}
+      />
+      <ChromaticAberration
+    blendFunction={BlendFunction.NORMAL} // blend mode
+    offset={[0.001, 0.0005]} // color offset
+  />
 	  </EffectComposer>
   )
 }
