@@ -3,6 +3,8 @@ import { useStore } from './state'
 
 import { IconContext } from 'react-icons'
 import { FaInstagram, FaSoundcloud,  FaTwitter} from "react-icons/fa"
+
+// import S from './S.svg'
 // import { FaSoundcloud } from 'react-icons/fa/brands'
 const mainLogo = process.env.PUBLIC_URL + '/bellcurve.png'
 
@@ -47,6 +49,7 @@ export default function InfoPanel(props){
               className="fa-lg" 
               onClick={() => openPage(links.twitter)}
             />
+            {/*<S/>*/}
           </IconContext.Provider>
         </div>
     </div>

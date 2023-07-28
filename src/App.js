@@ -15,6 +15,7 @@ import Cam from './Cam'
 import PostProcessing from './PostProcessing'
 import SC from './SC'
 import InfoPanel from './InfoPanel'
+import FrameLimiter from './FrameLimiter'
 
 import { glCheck, mobileAndTabletCheck } from './helpers'
 
@@ -69,6 +70,7 @@ function App() {
           {...bind()}
         >
           <Canvas 
+            frameloop="demand"
             shadows
             dpr={window.devicePixelRatio*pixRat}
             onPointerMissed={(e)=>{
@@ -89,6 +91,7 @@ function App() {
               <Cam/>
               <PostProcessing pixRat={pixRat}/>
             </Selection>
+            <FrameLimiter limit={isMobile ? 30 : 60}/>
           </Canvas>
         </div>
         <InfoPanel scRef={scRef}/>
