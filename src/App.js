@@ -42,7 +42,8 @@ function App() {
 
   const hasGL = glInfo.error ? false : true
   const hdState = glInfo.card === null || isMobile ? false : true
-  const pixRat = hdState ? 1 : .5
+  const pixRat = hdState ? 1 : isMobile ? .33333 : .5
+  const frameCap = 60//isMobile ? 30 : 60
 
   const bind = useDrag(
     ({down, movement: [x, y], event }) => {
@@ -88,10 +89,10 @@ function App() {
                 pixRat={pixRat}
               />
               <Balloons/>
-              <Cam/>
+              <Cam frameCap={frameCap}/>
               <PostProcessing pixRat={pixRat}/>
             </Selection>
-            <FrameLimiter limit={isMobile ? 30 : 60}/>
+            {/*<FrameLimiter limit={frameCap}/>*/}
           </Canvas>
         </div>
         <InfoPanel scRef={scRef}/>

@@ -23,7 +23,7 @@ function getTarget(cam, length, target){
 
 export default function Cam(props) {
   const { camera, size, viewport } = useThree()
-  let { p, q, t } = props
+  let { p, q, t, frameCap } = props
 
   // console.log(camera)
 
@@ -74,7 +74,8 @@ export default function Cam(props) {
     let curTarget = new THREE.Vector3()
     getTarget(camera, camOffset.length(), curTarget)
     const drag = useStore.getState().drag
-    const lerpAmt = .05
+    let lerpAmt = .05
+    lerpAmt *= frameCap == 60 ? 1 : 2
 
   	if( !drag[2] && (
       camera.position.distanceTo(p) > .001
