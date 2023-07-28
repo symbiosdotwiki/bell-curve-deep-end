@@ -10,6 +10,7 @@ export const defaultState = {
   'dofTarget': new THREE.Vector3(0,1.5,0),
   'playing' : false,
   'drag': [0,0],
+  'stats' : false,
 }
 
 export const useStore = create((set) => ({

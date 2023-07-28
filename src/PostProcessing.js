@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useStore, scURL } from './state'
 
 import { SoftShadows, Stats } from "@react-three/drei"
@@ -7,6 +8,31 @@ import {
 } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 
+
+function StatsContainer(props) {
+	const stats = useStore((state) => state.stats)
+
+	useEffect(() => {
+    const handleKeyUp = (e) => {
+    	const s = useStore.getState().stats
+      if(e.code==='KeyS'){
+        useStore.setState({ 
+        	stats: !s
+        })
+      }
+    }
+    document.addEventListener('keyup', handleKeyUp)
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [])
+
+	return (
+		<>
+			{ stats ? <Stats/> : '' }
+		</>
+	)
+}
 
 function Effects(props) {
 	const { pixRat } = props
@@ -52,7 +78,7 @@ export default function PostProcessing(props) {
 
   return (
   	<>
-  		<Stats />
+  		<StatsContainer />
 			<fog attach="fog" args={[`hsl(195, 69%, 48%)`, .5, 5]} density={.15} />
 	  	<SoftShadows size={10} samples={10} />
 	    <Effects pixRat={pixRat}/>
