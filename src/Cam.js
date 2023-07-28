@@ -75,7 +75,7 @@ export default function Cam(props) {
     getTarget(camera, camOffset.length(), curTarget)
     const drag = useStore.getState().drag
     let lerpAmt = .05
-    lerpAmt *= frameCap == 60 ? 1 : 2
+    // lerpAmt *= frameCap == 60 ? 1 : 2
 
   	if( !drag[2] && (
       camera.position.distanceTo(p) > .001

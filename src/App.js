@@ -71,7 +71,7 @@ function App() {
           {...bind()}
         >
           <Canvas 
-            frameloop="demand"
+            // frameloop="demand"
             shadows
             dpr={window.devicePixelRatio*pixRat}
             onPointerMissed={(e)=>{
