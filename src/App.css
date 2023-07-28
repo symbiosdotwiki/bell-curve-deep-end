@@ -127,7 +127,8 @@
   transition: font-size .5s;
 }
 
-@suppo/*rts (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+/*
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
   .trackTitleContainer {
     -webkit-backdrop-filter: blur(1px);
     backdrop-filter: blur(1px);
