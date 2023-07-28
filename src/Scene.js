@@ -38,6 +38,8 @@ export default function Scene(props) {
 
   const hdriUrl = process.env.PUBLIC_URL + "/00025.hdr"
 
+  // console.log('RERENDER SCENE')
+
   return (
     <group ref={ref} {...props} dispose={null} >
       {meshes.map((key,idx) => {

@@ -38,6 +38,8 @@ const Cam = (props) => {
 function Balloon(props){
   const { geo, cam, meshes, nodes } = props
 
+  // console.log('RERENDER BALLOON: ', geo.name)
+
   const camRef = useRef()
   const geoRef = useRef()
 
