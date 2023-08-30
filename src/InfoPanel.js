@@ -6,7 +6,7 @@ import { FaInstagram, FaSoundcloud,  FaTwitter} from "react-icons/fa"
 
 import { ReactComponent as S } from './S.svg'
 // import { FaSoundcloud } from 'react-icons/fa/brands'
-const mainLogo = process.env.PUBLIC_URL + '/bellcurve.png'
+const mainLogo = process.env.PUBLIC_URL + '/bellcurve-white.png'
 
 export default function InfoPanel(props){
 	const { scRef } = props
@@ -25,10 +25,10 @@ export default function InfoPanel(props){
 
 	return (
     	<div className="INFO">
-        <div className="INFO-block1">
-          <img  src={mainLogo} />
+      
+        {/*<div className="INFO-block1">
           <div className="TITLE"> DEEP END </div>
-        </div>
+        </div>*/}
         <div className="INFO-block2">
           <div className="Playing"> {
           	trackTitle ? "Now Playing:" : "Click A Balloon To Start"
@@ -36,6 +36,7 @@ export default function InfoPanel(props){
           <div className="TrackInfo"> {trackTitle} </div>
         </div>
         <div className="LINKS">
+          <img class="main-logo" src={mainLogo} />
           <IconContext.Provider value={{size: 42}}>
           	<FaSoundcloud
               className="fa-lg" 

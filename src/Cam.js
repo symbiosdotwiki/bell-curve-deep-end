@@ -71,6 +71,13 @@ export default function Cam(props) {
     ), .002
     )
 
+    if(size.width > size.height){
+      camera.filmOffset = -3
+    }
+    else{
+      camera.filmOffset = 0
+    }
+
     let curTarget = new THREE.Vector3()
     getTarget(camera, camOffset.length(), curTarget)
     const drag = useStore.getState().drag

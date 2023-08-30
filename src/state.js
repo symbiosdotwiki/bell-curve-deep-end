@@ -11,6 +11,7 @@ export const defaultState = {
   'playing' : false,
   'drag': [0,0],
   'stats' : false,
+  'stencilBuffer' : true,
 }
 
 export const useStore = create((set) => ({

@@ -11,6 +11,30 @@ import { findValuesByKey } from './helpers'
 
 const gltfURL = process.env.PUBLIC_URL + '/scene.glb'
 
+function SceneObject(props) {
+  const { geo } = props
+  const { viewport } = useThree()
+  const geoRef = useRef()
+
+  let p = new THREE.Vector3()
+  geo.updateWorldMatrix(true, true)
+  geo.getWorldPosition(p.set(0,0,0))
+
+  // useFrame((state, dt) => {
+  //   // console.log(p)
+  //   geoRef.current.scale.z = Math.max( 1, viewport.width / viewport.height)
+  // })
+
+  return (
+    <mesh 
+      castShadow receiveShadow
+      ref={geoRef}
+      geometry={geo.geometry} 
+      material={geo.material}
+    />
+  )
+}
+
 export default function Scene(props) {
   const { pixRat } = props
 
@@ -54,18 +78,14 @@ export default function Scene(props) {
         if(geo.name.includes('Sand'))
           geo.material.roughness = .9
 
-        return <mesh 
-          castShadow receiveShadow
-          key={idx}
-          geometry={geo.geometry}
-          material={geo.material}
-        />
+        return <SceneObject geo={geo}/>
       })}
       <Sparkles count={1000} scale={4} speed={.3} opacity={.5}/>
       <Environment 
         background 
         files={hdriUrl}
       />
+      {/*<Sphere/>*/}
       <ambientLight intensity={.15} />
       <group ref={lightRef}>
         <directionalLight

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 
 import * as THREE from "three"
-import { useFrame } from "@react-three/fiber"
+import { useFrame, useThree } from "@react-three/fiber"
 import { useGLTF, PerspectiveCamera } from '@react-three/drei'
 
 import { 
@@ -37,6 +37,7 @@ const Cam = (props) => {
 
 function Balloon(props){
   const { geo, cam, meshes, nodes } = props
+  const { viewport } = useThree()
 
   // console.log('RERENDER BALLOON: ', geo.name)
 
@@ -117,6 +118,9 @@ function Balloon(props){
     curTheta.current %= Math.PI * 2
     rot.y = curTheta.current
     rot.y %= Math.PI * 2
+
+    // geoRef.current.position.z = p.z *  Math.max( 1, viewport.width / viewport.height)
+
   })
 
   useEffect(() => {
