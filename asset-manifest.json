@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/bell-curve-deep-end/static/css/main.02c63834.css",
-    "main.js": "/bell-curve-deep-end/static/js/main.e9b6f66e.js",
+    "main.css": "/bell-curve-deep-end/static/css/main.a325e5c6.css",
+    "main.js": "/bell-curve-deep-end/static/js/main.e242de75.js",
     "static/js/529.c06e6f90.chunk.js": "/bell-curve-deep-end/static/js/529.c06e6f90.chunk.js",
     "static/media/PicNic-Regular.woff": "/bell-curve-deep-end/static/media/PicNic-Regular.1aa31bc788227b85c8cb.woff",
     "static/media/S.svg": "/bell-curve-deep-end/static/media/S.33e1351b32ca9d834a2240445b554387.svg",
     "index.html": "/bell-curve-deep-end/index.html",
-    "main.02c63834.css.map": "/bell-curve-deep-end/static/css/main.02c63834.css.map",
-    "main.e9b6f66e.js.map": "/bell-curve-deep-end/static/js/main.e9b6f66e.js.map",
+    "main.a325e5c6.css.map": "/bell-curve-deep-end/static/css/main.a325e5c6.css.map",
+    "main.e242de75.js.map": "/bell-curve-deep-end/static/js/main.e242de75.js.map",
     "529.c06e6f90.chunk.js.map": "/bell-curve-deep-end/static/js/529.c06e6f90.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.02c63834.css",
-    "static/js/main.e9b6f66e.js"
+    "static/css/main.a325e5c6.css",
+    "static/js/main.e242de75.js"
   ]
 }
