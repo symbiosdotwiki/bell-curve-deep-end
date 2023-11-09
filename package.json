@@ -93,7 +93,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "www.bellcurve.world",
+  "homepage": "https://www.bellcurve.world",
   "jest": {
     "roots": [
       "<rootDir>/src"
