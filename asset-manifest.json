@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/bell-curve-deep-end/static/css/main.a325e5c6.css",
-    "main.js": "/bell-curve-deep-end/static/js/main.e242de75.js",
-    "static/js/529.c06e6f90.chunk.js": "/bell-curve-deep-end/static/js/529.c06e6f90.chunk.js",
-    "static/media/PicNic-Regular.woff": "/bell-curve-deep-end/static/media/PicNic-Regular.1aa31bc788227b85c8cb.woff",
-    "static/media/S.svg": "/bell-curve-deep-end/static/media/S.33e1351b32ca9d834a2240445b554387.svg",
-    "index.html": "/bell-curve-deep-end/index.html",
-    "main.a325e5c6.css.map": "/bell-curve-deep-end/static/css/main.a325e5c6.css.map",
-    "main.e242de75.js.map": "/bell-curve-deep-end/static/js/main.e242de75.js.map",
-    "529.c06e6f90.chunk.js.map": "/bell-curve-deep-end/static/js/529.c06e6f90.chunk.js.map"
+    "main.css": "/www.bellcurve.world/static/css/main.ade6c217.css",
+    "main.js": "/www.bellcurve.world/static/js/main.ceaa8af5.js",
+    "static/js/529.c06e6f90.chunk.js": "/www.bellcurve.world/static/js/529.c06e6f90.chunk.js",
+    "static/media/PicNic-Regular.woff": "/www.bellcurve.world/static/media/PicNic-Regular.1aa31bc788227b85c8cb.woff",
+    "static/media/S.svg": "/www.bellcurve.world/static/media/S.33e1351b32ca9d834a2240445b554387.svg",
+    "index.html": "/www.bellcurve.world/index.html",
+    "main.ade6c217.css.map": "/www.bellcurve.world/static/css/main.ade6c217.css.map",
+    "main.ceaa8af5.js.map": "/www.bellcurve.world/static/js/main.ceaa8af5.js.map",
+    "529.c06e6f90.chunk.js.map": "/www.bellcurve.world/static/js/529.c06e6f90.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.a325e5c6.css",
-    "static/js/main.e242de75.js"
+    "static/css/main.ade6c217.css",
+    "static/js/main.ceaa8af5.js"
   ]
 }
