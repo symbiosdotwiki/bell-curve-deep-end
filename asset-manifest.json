@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/www.bellcurve.world/static/css/main.ade6c217.css",
-    "main.js": "/www.bellcurve.world/static/js/main.ceaa8af5.js",
-    "static/js/529.c06e6f90.chunk.js": "/www.bellcurve.world/static/js/529.c06e6f90.chunk.js",
-    "static/media/PicNic-Regular.woff": "/www.bellcurve.world/static/media/PicNic-Regular.1aa31bc788227b85c8cb.woff",
-    "static/media/S.svg": "/www.bellcurve.world/static/media/S.33e1351b32ca9d834a2240445b554387.svg",
-    "index.html": "/www.bellcurve.world/index.html",
-    "main.ade6c217.css.map": "/www.bellcurve.world/static/css/main.ade6c217.css.map",
-    "main.ceaa8af5.js.map": "/www.bellcurve.world/static/js/main.ceaa8af5.js.map",
-    "529.c06e6f90.chunk.js.map": "/www.bellcurve.world/static/js/529.c06e6f90.chunk.js.map"
+    "main.css": "/static/css/main.fadd4da3.css",
+    "main.js": "/static/js/main.d002ee2b.js",
+    "static/js/529.c06e6f90.chunk.js": "/static/js/529.c06e6f90.chunk.js",
+    "static/media/PicNic-Regular.woff": "/static/media/PicNic-Regular.1aa31bc788227b85c8cb.woff",
+    "static/media/S.svg": "/static/media/S.33e1351b32ca9d834a2240445b554387.svg",
+    "index.html": "/index.html",
+    "main.fadd4da3.css.map": "/static/css/main.fadd4da3.css.map",
+    "main.d002ee2b.js.map": "/static/js/main.d002ee2b.js.map",
+    "529.c06e6f90.chunk.js.map": "/static/js/529.c06e6f90.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ade6c217.css",
-    "static/js/main.ceaa8af5.js"
+    "static/css/main.fadd4da3.css",
+    "static/js/main.d002ee2b.js"
   ]
 }
