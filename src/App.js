@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useRef } from "react"
 
 import { Canvas, useLoader, useThree } from '@react-three/fiber'
+import { useProgress } from '@react-three/drei'
 import { useStore, scURL } from './state'
 
 import { useDrag } from 'react-use-gesture'
@@ -22,14 +23,17 @@ import { glCheck, mobileAndTabletCheck } from './helpers'
 import './App.css'
 import './Info.css'
 
-const mainLogo = process.env.PUBLIC_URL + '/bellcurve.png'
+const mainLogo = process.env.PUBLIC_URL + '/BELL CURVE LOGO.png'
 
 
 function Loading() {
+  const { active, progress, errors, item, loaded, total } = useProgress()
   return (
+    <div className={"LOADING-FULL shown " + (loaded ? "hidden" : "")}>
     <div className="LOADING">
       {/*LOADING*/}
     <img  src={mainLogo} />
+    </div>
     </div>
   )
 }
@@ -67,7 +71,9 @@ function App() {
       
       <SC scRef={scRef}/>
 
-      <Suspense fallback={<Loading/>}>
+      <Loading/>
+
+      <Suspense>
         <div 
           className="THREE" 
           {...bind()}

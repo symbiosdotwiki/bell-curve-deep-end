@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react"
 import { useStore } from './state'
 
 import { IconContext } from 'react-icons'
-import { FaInstagram, FaSoundcloud,  FaTwitter} from "react-icons/fa"
+import { FaInstagram, FaSoundcloud,  FaBandcamp} from "react-icons/fa"
 
 import { ReactComponent as S } from './S.svg'
 // import { FaSoundcloud } from 'react-icons/fa/brands'
@@ -17,6 +17,7 @@ export default function InfoPanel(props){
     'insta' : 'https://www.instagram.com/bell.curve',
     'twitter' : 'https://twitter.com/isabellcurve',
     'symbios' : 'https://www.symbios.wiki/',
+    'bandcamp' : 'https://bellcurve.bandcamp.com/album/deep-end',
   }
 
   const openPage = (url) => {
@@ -38,6 +39,10 @@ export default function InfoPanel(props){
         <div className="LINKS">
           <img class="main-logo" src={mainLogo} />
           <IconContext.Provider value={{size: 42}}>
+            <FaBandcamp
+              className="fa-lg" 
+              onClick={() => openPage(links.bandcamp)}
+            />
           	<FaSoundcloud
               className="fa-lg" 
               onClick={() => openPage(links.sc)}
@@ -46,10 +51,6 @@ export default function InfoPanel(props){
               className="fa-lg" 
               onClick={() => openPage(links.insta)}
             /> 
-            <FaTwitter
-              className="fa-lg" 
-              onClick={() => openPage(links.twitter)}
-            />
             <S
               onClick={() => openPage(links.symbios)}
             />
