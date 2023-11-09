@@ -1,17 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.fadd4da3.css",
-    "main.js": "/static/js/main.d002ee2b.js",
+    "main.css": "/static/css/main.4bb87345.css",
+    "main.js": "/static/js/main.d6c5234e.js",
     "static/js/529.c06e6f90.chunk.js": "/static/js/529.c06e6f90.chunk.js",
     "static/media/PicNic-Regular.woff": "/static/media/PicNic-Regular.1aa31bc788227b85c8cb.woff",
+    "static/media/DeterminationMono.ttf": "/static/media/DeterminationMono.2f9b96898e4db1b8e690.ttf",
+    "static/media/PlantasiaStingray-Heavy.otf": "/static/media/PlantasiaStingray-Heavy.7d7d343c666f69fdf009.otf",
+    "static/media/PlantasiaStingray-Light.otf": "/static/media/PlantasiaStingray-Light.fe7b0d48bd80e37331cb.otf",
     "static/media/S.svg": "/static/media/S.33e1351b32ca9d834a2240445b554387.svg",
     "index.html": "/index.html",
-    "main.fadd4da3.css.map": "/static/css/main.fadd4da3.css.map",
-    "main.d002ee2b.js.map": "/static/js/main.d002ee2b.js.map",
+    "main.4bb87345.css.map": "/static/css/main.4bb87345.css.map",
+    "main.d6c5234e.js.map": "/static/js/main.d6c5234e.js.map",
     "529.c06e6f90.chunk.js.map": "/static/js/529.c06e6f90.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fadd4da3.css",
-    "static/js/main.d002ee2b.js"
+    "static/css/main.4bb87345.css",
+    "static/js/main.d6c5234e.js"
   ]
 }
