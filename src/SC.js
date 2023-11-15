@@ -40,7 +40,7 @@ export default function SC(props) {
 	    scRef.current.getInternalPlayer().getCurrentSoundIndex((e)=>{
 	      if(e != curTrack){
 	        scRef.current.getInternalPlayer().skip(curTrack)
-	        scRef.current.getInternalPlayer().seekTo(220000)
+	        scRef.current.getInternalPlayer().seekTo(0)
 	        scRef.current.getInternalPlayer().getCurrentSound((s) => {
 						useStore.setState({ trackTitle : s.title })
 					})
