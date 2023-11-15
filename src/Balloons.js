@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, createRef } from 'react'
 
 import * as THREE from "three"
 import { useFrame, useThree } from "@react-three/fiber"
@@ -18,7 +18,7 @@ import TrackTitle from './TrackTitle'
 const gltfURL = process.env.PUBLIC_URL + '/balloons.glb'
 
 const Cam = (props) => {
-  const { cam, camRef } = props
+  const { cam, camRef, name } = props
   let q = new THREE.Quaternion()
   let p = new THREE.Vector3()
   
@@ -31,15 +31,14 @@ const Cam = (props) => {
       ref={camRef}
       position={p}
       quaternion={q}
+      name={name}
     />
   )
 }
 
 function Balloon(props){
-  const { geo, cam, meshes, nodes } = props
+  const { geo, cam, meshes, nodes, bref } = props
   const { viewport } = useThree()
-
-  // console.log('RERENDER BALLOON: ', geo.name)
 
   const camRef = useRef()
   const geoRef = useRef()
@@ -63,6 +62,10 @@ function Balloon(props){
   )
   const nextNode = nodes[nextMesh]
   const nextTarget = nextNode ? nextNode.name : null
+  let nextDOFTarget = new THREE.Vector3()
+  if(nextNode){
+    nextNode.getWorldPosition(nextDOFTarget)
+  }
   const nextCam = nodes[nextMesh + "_Cam"]
 
 
@@ -76,8 +79,7 @@ function Balloon(props){
 
   geo.updateWorldMatrix(true, true)
   geo.getWorldPosition(p.set(0,0,0))
-  // console.log(geo.name, ' oTheta: ', oTheta)
-  // console.log(geo.name, ' curTheta: ', curTheta)
+
   if(curTheta.current == 0)
     geo.getWorldQuaternion(q)
 
@@ -86,13 +88,9 @@ function Balloon(props){
     const curCam = useStore.getState().cam
     geo.getWorldPosition(p)
     if(e) e.stopPropagation()
+
     useStore.setState({ 
       curTrack: trackNum,
-      cam: camRef.current,
-      curTarget: geo.name,
-      nextTarget: nextTarget,
-      nextCam: nextCam,
-      dofTarget: p,
       playing: selected && curCam == camRef.current ? !playing : true
     })
   }
@@ -130,12 +128,11 @@ function Balloon(props){
     geo.material.envMapIntensity = 1
     geo.material.needsUpdate = true
 
-    // oTheta = geoRef.current.position.y
   }, [])
 
   return (
     <group>
-      <Cam camRef={camRef} cam={cam} />
+      <Cam camRef={bref} cam={cam} name={geo.name}/>
       <group 
         position={p}
         quaternion={q}
@@ -159,6 +156,33 @@ function Balloon(props){
     )
 }
 
+function BalloonChecker(props){
+  const { balloons, nodes, getRefs } = props
+  const curTrack = useStore((state) => state.curTrack)
+
+  if(!curTrack)
+    return 
+
+  const bRefs = getRefs()
+
+  const track = tracklist[curTrack]
+  const balloon = Object.keys(mapping).find(key => mapping[key] === track)
+  const cam = bRefs.current.find(item => item.current.name === balloon)
+
+  let target = new THREE.Vector3()
+
+  nodes[balloon].updateWorldMatrix(true, true)
+  nodes[balloon].getWorldPosition(target)  
+
+  useStore.setState({ 
+    cam: cam.current,
+    curTarget: balloon,
+    dofTarget: target,
+  })
+
+  return
+}
+
 export default function Balloons(props) {
   const ref = useRef()
 
@@ -176,7 +200,14 @@ export default function Balloons(props) {
     !meshes.includes(key) && !key.includes('Root')
   )
 
+  const bRefs = useRef(meshes.map(() => createRef()))
+
+  const getRefs = () => {
+    return bRefs
+  }
+
   return (
+    <>
     <group ref={ref} {...props} dispose={null}>
       {meshes.map((key,idx) => {
         const geo = nodes[key]
@@ -189,9 +220,17 @@ export default function Balloons(props) {
             cam={cam}
             meshes={meshes}
             nodes={nodes}
+            bref={bRefs.current[idx]}
           />
       })}
     </group>
+    <BalloonChecker
+      nodes={nodes}
+      balloons={meshes}
+      getRefs={getRefs}
+      // setBalloon={setBalloon}
+    />
+    </>
   )
 }
 

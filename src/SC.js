@@ -5,14 +5,10 @@ import ReactPlayer from 'react-player/soundcloud'
 function TrackSelector(props) {
 	const { selectTrack, setNext, playPause } = props
 
-	const curCam = useStore((state) => state.cam)
 	const curTrack = useStore((state) => state.curTrack)
-  const nextCam = useStore((state) => state.nextCam)
-  const nextTarget = useStore((state) => state.nextTarget)
   const playing = useStore((state) => state.playing)
 
   selectTrack(curTrack)
-  setNext(nextCam, nextTarget, curCam)
   playPause(playing)
 
 	return 
@@ -23,6 +19,7 @@ export default function SC(props) {
 
   let nextCam = null
   let nextTarget = null
+  let nextDOFTarget = null
   let curTrack = null
   let curCam = null
 
@@ -43,9 +40,9 @@ export default function SC(props) {
 	    scRef.current.getInternalPlayer().getCurrentSoundIndex((e)=>{
 	      if(e != curTrack){
 	        scRef.current.getInternalPlayer().skip(curTrack)
-	        scRef.current.getInternalPlayer().seekTo(0)
-	        scRef.current.getInternalPlayer().getCurrentSound((e) => {
-						useStore.setState({ trackTitle : e.title })
+	        scRef.current.getInternalPlayer().seekTo(220000)
+	        scRef.current.getInternalPlayer().getCurrentSound((s) => {
+						useStore.setState({ trackTitle : s.title })
 					})
 	      }
 	    })
@@ -54,28 +51,22 @@ export default function SC(props) {
 
 	const checkAndSetNext = (e) => {
 		scRef.current.getInternalPlayer().getCurrentSoundIndex((e)=>{
+		scRef.current.getInternalPlayer().getCurrentSound((s)=>{
       if(e != curTrack){
+      	const newCam = curCam != null ? nextCam : curCam
         useStore.setState({ 
           curTrack: e,
-          cam: curCam ? nextCam : curCam,
-          curTarget: nextTarget,
+          trackTitle : s.title,
         })
       }
     })
-	}
-
-	const setNext = (cam, tar, curCam) => {
-		nextCam = cam
-		nextTarget = tar
-		curCam = curCam
+	})
 	}
 
   useEffect(() => {
     const handleKeyUp = (e) => {
-      // console.log(e.code)
       if(e.code==='Space'){
       	const playing = useStore.getState().playing
-        // scRef.current.getInternalPlayer().toggle()
         useStore.setState({ 
         	playing: !playing
         })
@@ -100,7 +91,13 @@ export default function SC(props) {
 		    ref={scRef}
 		    // onPlay={}
 		    onProgress={checkAndSetNext}
-		    onEnded={(e) => {"FINISH"}}
+		    onEnded={(e) => {
+		    	console.log("FINISH")
+		    	useStore.setState({ 
+	          curTrack: 0,
+	          // trackTitle : s.title,
+	        })
+		    }}
 		    config={{
 		      playing:true,
 		      soundcloud:{
@@ -112,7 +109,6 @@ export default function SC(props) {
 		  />
 		  <TrackSelector
 		  	selectTrack={selectTrack}
-		  	setNext={setNext}
 		  	playPause={playPause}
 		  />
 	  </>
