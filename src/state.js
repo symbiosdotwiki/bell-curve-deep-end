@@ -12,6 +12,7 @@ export const defaultState = {
   'drag': [0,0],
   'stats' : false,
   'stencilBuffer' : true,
+  'clicked': false,
 }
 
 export const useStore = create((set) => ({

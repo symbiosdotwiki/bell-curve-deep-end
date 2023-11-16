@@ -37,7 +37,7 @@ export default function InfoPanel(props){
           <div className="TrackInfo"> {trackTitle} </div>
         </div>
         <div className="LINKS">
-          <img class="main-logo" src={mainLogo} />
+          <img className="main-logo" src={mainLogo} />
           <IconContext.Provider value={{size: 42}}>
             <FaBandcamp
               className="fa-lg" 

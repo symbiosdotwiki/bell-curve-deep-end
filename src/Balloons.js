@@ -84,15 +84,14 @@ function Balloon(props){
     geo.getWorldQuaternion(q)
 
   const clickGeo = (e) => {
-    // console.log(trackNum)
     const playing = useStore.getState().playing
     const curCam = useStore.getState().cam
     geo.getWorldPosition(p)
     if(e) e.stopPropagation()
 
-    useStore.setState({ 
+    useStore.setState({
       curTrack: trackNum,
-      playing: selected && curCam == camRef.current ? !playing : true
+      playing: selected && curCam != null ? !playing : true
     })
   }
 
@@ -169,25 +168,33 @@ function Balloon(props){
 function BalloonChecker(props){
   const { balloons, nodes, getRefs } = props
   const curTrack = useStore((state) => state.curTrack)
+  const clicked = useStore((state) => state.clicked)
 
-  if(curTrack === null)
-    return 
+  useEffect(() => {
+    const bRefs = getRefs()
 
-  const bRefs = getRefs()
+    // console.log(curTrack)
 
-  const track = tracklist[curTrack]
-  const balloon = Object.keys(mapping).find(key => mapping[key] === track)
-  const cam = bRefs.current.find(item => item.current.name === balloon)
+    if( (curTrack == 0 && !clicked) || bRefs.current === null)
+      return 
 
-  let target = new THREE.Vector3()
+    const track = tracklist[curTrack]
+    const balloon = Object.keys(mapping).find(key => mapping[key] === track)
+    const cam = bRefs.current.find(item => item.current.name === balloon)
 
-  nodes[balloon].updateWorldMatrix(true, true)
-  nodes[balloon].getWorldPosition(target)  
+    if(!cam || !cam.current)
+      return
 
-  useStore.setState({ 
-    cam: cam.current,
-    curTarget: balloon,
-    dofTarget: target,
+    let target = new THREE.Vector3()
+
+    nodes[balloon].updateWorldMatrix(true, true)
+    nodes[balloon].getWorldPosition(target)  
+
+    useStore.setState({ 
+      cam: cam.current,
+      curTarget: balloon,
+      dofTarget: target,
+    })
   })
 
   return

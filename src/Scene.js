@@ -78,7 +78,7 @@ export default function Scene(props) {
         if(geo.name.includes('Sand'))
           geo.material.roughness = .9
 
-        return <SceneObject geo={geo}/>
+        return <SceneObject geo={geo} key={idx}/>
       })}
       <Sparkles count={1000} scale={4} speed={.3} opacity={.5}/>
       <Environment 
