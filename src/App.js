@@ -27,7 +27,7 @@ const mainLogo = process.env.PUBLIC_URL + '/BELL CURVE LOGO.png'
 
 
 function Loading() {
-  const { active, progress, errors, item, loaded, total } = useProgress()
+  const { loaded } = useProgress()
   return (
     <div className={"LOADING-FULL shown " + (loaded ? "hidden" : "")}>
     <div className="LOADING">
