@@ -84,6 +84,7 @@ function Balloon(props){
     geo.getWorldQuaternion(q)
 
   const clickGeo = (e) => {
+    // console.log(trackNum)
     const playing = useStore.getState().playing
     const curCam = useStore.getState().cam
     geo.getWorldPosition(p)
@@ -169,7 +170,7 @@ function BalloonChecker(props){
   const { balloons, nodes, getRefs } = props
   const curTrack = useStore((state) => state.curTrack)
 
-  if(!curTrack)
+  if(curTrack === null)
     return 
 
   const bRefs = getRefs()
