@@ -117,6 +117,15 @@ function Balloon(props){
     rot.y = curTheta.current
     rot.y %= Math.PI * 2
 
+
+    const loaded = useStore.getState().loaded
+
+    if(!loaded){
+      // const d = new Date();
+      // console.log("Balloons", d.getTime())
+      useStore.setState({ loaded : true })
+    }
+
     // geoRef.current.position.z = p.z *  Math.max( 1, viewport.width / viewport.height)
 
   })

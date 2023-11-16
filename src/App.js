@@ -23,17 +23,23 @@ import { glCheck, mobileAndTabletCheck } from './helpers'
 import './App.css'
 import './Info.css'
 
-const mainLogo = process.env.PUBLIC_URL + '/BELL CURVE LOGO.png'
+const mainLogo = process.env.PUBLIC_URL + '/BELL CURVE LOGO.jpg'
 
 
 function Loading() {
-  const { loaded } = useProgress()
+  // const { loaded } = useProgress()
+  const loaded = useStore((state) => state.loaded)
+  // if(loaded){
+  //   const d = new Date();
+  //   console.log("LOADED", d.getTime())
+  // }
   return (
     <div className={"LOADING-FULL shown " + (loaded ? "hidden" : "")}>
     <div className="LOADING">
       {/*LOADING*/}
     <img  src={mainLogo} />
     </div>
+    <div className="loading-text"> LOADING </div>
     </div>
   )
 }
