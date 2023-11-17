@@ -90,6 +90,7 @@ function Balloon(props){
     if(e) e.stopPropagation()
 
     useStore.setState({
+      resetView: true,
       curTrack: trackNum,
       playing: selected && curCam != null ? !playing : true
     })
@@ -169,6 +170,7 @@ function BalloonChecker(props){
   const { balloons, nodes, getRefs } = props
   const curTrack = useStore((state) => state.curTrack)
   const clicked = useStore((state) => state.clicked)
+  const resetView = useStore((state) => state.resetView)
 
   useEffect(() => {
     const bRefs = getRefs()
@@ -190,7 +192,8 @@ function BalloonChecker(props){
     nodes[balloon].updateWorldMatrix(true, true)
     nodes[balloon].getWorldPosition(target)  
 
-    useStore.setState({ 
+    useStore.setState({
+      resetView: false,
       cam: cam.current,
       curTarget: balloon,
       dofTarget: target,
