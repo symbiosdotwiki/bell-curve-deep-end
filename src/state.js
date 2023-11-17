@@ -2,7 +2,10 @@ import create from 'zustand'
 import * as THREE from "three"
 
 // export const scURL = 'https://soundcloud.com/bell_curve/sets/deep-end-mastered/s-nEZAnDMbc0Z'
-export const scURL = "https://api.soundcloud.com/playlists/1648753261?secret_token=s-nEZAnDMbc0Z"
+// https://soundcloud.com/bell_curve/sets/deep-end
+// export const scURL = "https://api.soundcloud.com/playlists/1648753261?secret_token=s-nEZAnDMbc0Z"
+export const scURL = "https://api.soundcloud.com/playlists/1723630155"
+
 export const defaultState = {
   'curTrack': 0,
   'cam': null,

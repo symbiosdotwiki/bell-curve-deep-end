@@ -190,7 +190,10 @@ function BalloonChecker(props){
     let target = new THREE.Vector3()
 
     nodes[balloon].updateWorldMatrix(true, true)
-    nodes[balloon].getWorldPosition(target)  
+    nodes[balloon].getWorldPosition(target) 
+
+    // const curCam = useStore.getState().cam
+    // const playing = useStore.getState().playing 
 
     useStore.setState({
       resetView: false,
